@@ -7,18 +7,13 @@ Project template to get started with PySide6 and QtQuick quickly without worryin
 # Features
 
 * Internationalization including (LTR/RTL)
-
-
 * Resources compiled ahead of time:
     * Everything in `data`, `i18n`, and `qml` will be compiled into a Python file
     * Final build only consists of Python files
-
-
 * Testing preconfigured (Python + Qml)
 * CI preconfigured
-
-
 * Client side window decorations implemented
+* Qt creator not required (use your favorite text editor)
 
 # Development Setup
 
