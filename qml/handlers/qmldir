@@ -1,0 +1,3 @@
+module handlers
+MyAppWindowBorderMouseCurser MyAppWindowBorderMouseCurser.qml
+MyAppWindowResizeHandler MyAppWindowResizeHandler.qml
