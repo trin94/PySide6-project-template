@@ -40,8 +40,8 @@ class ArgumentValidator:
             self._errors.append(f'{name.capitalize()} {directory} is not a directory')
 
     def break_on_errors(self):
-        if errors := self._errors:
-            for error in errors:
+        if self._errors:
+            for error in self._errors:
                 print(error, file=sys.stderr)
             sys.exit(1)
 
