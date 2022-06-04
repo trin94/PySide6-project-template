@@ -1,3 +1,2 @@
-inject>=4.3.1
 PySide6>=6.3.0
 pytest>=7.1.2

@@ -35,17 +35,17 @@ Item {
 
         function test_language_de_exists(data) {
             const languages = extractLanguages()
-            verify(languages.includes('de'))
+            verify(languages.includes('de_DE'))
         }
 
         function test_language_en_exists(data) {
             const languages = extractLanguages()
-            verify(languages.includes('en'))
+            verify(languages.includes('en_US'))
         }
 
         function test_language_he_exists(data) {
             const languages = extractLanguages()
-            verify(languages.includes('he'))
+            verify(languages.includes('he_IL'))
         }
 
         function extractLanguages() {

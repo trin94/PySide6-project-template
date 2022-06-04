@@ -22,21 +22,20 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
-import inject
-from PySide6.QtCore import Slot, QObject
-from PySide6.QtQml import QmlElement, QmlSingleton
-
-from myapp.services import TranslationService
-
-QML_IMPORT_NAME = "pyobjects"
-QML_IMPORT_MAJOR_VERSION = 1
+import pytest
+from PySide6.QtCore import QFile
 
 
-@QmlElement
-@QmlSingleton
-class TranslationPyObject(QObject):
-    _translator = inject.attr(TranslationService)
+@pytest.mark.parametrize('file_path', [
+    ':/data/app-icon.svg',
+    ':/i18n/de_DE.qm',
+    ':/i18n/he_IL.qm',
+])
+def test_resource_exist(file_path):
+    file = QFile(file_path)
+    assert file.exists()
 
-    @Slot(str)
-    def load_translation(self, abbrev: str):
-        self._translator.load(abbrev)
+
+def test_resource_does_not_exist():
+    file = QFile(':/random/file/which/not.exists')
+    assert not file.exists()

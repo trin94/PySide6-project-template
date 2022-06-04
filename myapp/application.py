@@ -24,33 +24,36 @@
 
 import sys
 
-import inject
-from PySide6.QtCore import QUrl
+from PySide6.QtCore import QUrl, QTranslator, QLocale
 from PySide6.QtGui import QGuiApplication, QIcon
 from PySide6.QtQml import QQmlApplicationEngine
 
-from myapp.services import TranslationService
-
 
 class MyApplication(QGuiApplication):
-    _translator = inject.attr(TranslationService)
 
     def __init__(self, args):
         super().__init__(args)
         self._engine = QQmlApplicationEngine()
+        self._translator = QTranslator()
 
     def set_window_icon(self):
         icon = QIcon(':/data/app-icon.svg')
         self.setWindowIcon(icon)
 
-    def initialize_translator(self):
-        self._translator.initialize_with(application=self, engine=self._engine)
+    def set_up_internationalization(self):
+        self.installTranslator(self._translator)
 
     def set_up_signals(self):
         self.aboutToQuit.connect(self._on_quit)
+        self._engine.uiLanguageChanged.connect(self._retranslate)
 
     def _on_quit(self) -> None:
         del self._engine
+
+    def _retranslate(self):
+        locale = QLocale(self._engine.uiLanguage())
+        self._translator.load(f':/i18n/{locale.name()}.qm')
+        self.setLayoutDirection(locale.textDirection())
 
     def set_up_imports(self):
         self._engine.addImportPath(':/qml')
