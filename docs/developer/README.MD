@@ -1,7 +1,7 @@
 # Development Setup
 
-* [Linux](setup-on-linux.md)
-* [Windows](setup-on-windows.md)
+* [Linux](dev-setup-linux.md)
+* [Windows](dev-setup-windows.md)
 
 This project assumes that a virtual environment is used.
 
@@ -54,14 +54,8 @@ Run `make develop-build` after each change in the `data`, `i18n`, or `qml` direc
 This will *compile* everything into a Python file and move it into the `myapp` directory
 where it will be picked up on app start.
 
-# Architecture
-
-* **QML Layer** is the user interface layer
-* **PyObject Layer** is the glue layer of Python and Qml
-* **Service Layer** is the application logic layer
-
 # Tips
 
 * If you're on Linux, and you're using PyCharm or something similar:
   Create a run configuration that runs the `develop-build` makefile target before the application.
-* Adding new languages is described [here](adding-new-languages.md)
+* Adding new languages is described [here](internationalization.md)
