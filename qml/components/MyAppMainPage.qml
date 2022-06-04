@@ -28,6 +28,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import components.header
+import pyobjects
 
 
 Page {
@@ -44,6 +45,8 @@ Page {
         Image {
             source: "qrc:/data/app-icon.svg"
             asynchronous: true
+            Layout.preferredWidth: 308
+            Layout.preferredHeight: 226
             Layout.alignment: Qt.AlignHCenter
         }
 
@@ -70,6 +73,13 @@ Page {
             color: Material.accent
             font.bold: true
             font.pixelSize: Qt.application.font.pixelSize * 2
+            Layout.alignment: Qt.AlignHCenter
+        }
+
+        Rectangle { color: "transparent"; height: 45; width: 10 }
+
+        Label {
+            text: qsTranslate("MainPage", "Exposed from Python: '%1'").arg(SingletonPyObject.exposed_property)
             Layout.alignment: Qt.AlignHCenter
         }
     }
