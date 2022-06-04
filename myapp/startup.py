@@ -40,11 +40,6 @@ class PreStartUp:
         QCoreApplication.setApplicationVersion('my app version')
 
     @staticmethod
-    def prepare_dependency_injection():
-        from myapp.injections import configure_injections
-        configure_injections()
-
-    @staticmethod
     def inject_environment_variables():
         # Qt expects 'qtquickcontrols2.conf' at root level, but the way we handle resources does not allow that.
         # So we need to override the path here
@@ -89,7 +84,6 @@ def perform_startup():
     we = PreStartUp()
     we.set_qt_application_name()
     we.set_qt_application_version()
-    we.prepare_dependency_injection()
     we.inject_environment_variables()
 
     we = StartUp()
