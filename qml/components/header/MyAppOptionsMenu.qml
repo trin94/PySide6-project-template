@@ -28,7 +28,6 @@ import QtQuick
 import QtQuick.Controls
 import components.shared
 import models
-import pyobjects
 
 
 MyAppAutoWidthMenu {
@@ -48,7 +47,7 @@ MyAppAutoWidthMenu {
                     // Delay it so possible animations have time
                     id: timer
                     interval: 125
-                    onTriggered: TranslationPyObject.load_translation(model.abbrev)
+                    onTriggered: Qt.uiLanguage = model.abbrev
                 }
             }
         }

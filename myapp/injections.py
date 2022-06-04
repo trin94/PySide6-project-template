@@ -24,11 +24,9 @@
 
 import inject
 
-from myapp.services import TranslationService
-
 
 def bindings(binder: inject.Binder):
-    binder.bind_to_constructor(TranslationService, lambda: TranslationService())
+    pass
 
 
 def configure_injections():

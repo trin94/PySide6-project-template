@@ -76,7 +76,7 @@ class StartUp:
         app = MyApplication(sys.argv)
 
         app.set_window_icon()
-        app.initialize_translator()
+        app.set_up_internationalization()
         app.set_up_signals()
         app.set_up_imports()
         app.start_engine()

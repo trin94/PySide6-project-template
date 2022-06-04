@@ -28,7 +28,6 @@ import QtQuick
 import QtQuick.Controls
 import components
 import handlers
-import pyobjects
 
 
 ApplicationWindow {
@@ -60,7 +59,7 @@ ApplicationWindow {
 
     Component.onCompleted: {
         // load language from settings
-        // TranslationPyObject.load_translation('de')
+        // Qt.uiLanguage = ...
     }
 
 }
