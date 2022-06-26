@@ -12,10 +12,12 @@ command: main.py
 # 3. Run: flatpak-builder --run build-dir org.github.trin94.pyside6.template.yml main.py
 
 finish-args:
+  - --share=ipc
   - --socket=wayland
   - --socket=fallback-x11
   - --socket=pulseaudio
   - --filesystem=host
+  - --device=dri
 
 modules:
   - name: pypi-dependencies
