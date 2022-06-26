@@ -1,0 +1,52 @@
+app-id: org.github.trin94.pyside6.template
+runtime: org.freedesktop.Platform
+runtime-version: '21.08'
+sdk: org.freedesktop.Sdk
+command: main.py
+
+# https://www.loganasherjones.com/2018/05/using-flatpak-with-python/
+#
+# Instructions:
+# 1. Build the project (please follow 'normal' build instructions)
+# 2. Run: flatpak-builder build-dir org.github.trin94.pyside6.template.yml --force-clean
+# 3. Run: flatpak-builder --run build-dir org.github.trin94.pyside6.template.yml main.py
+
+finish-args:
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --socket=pulseaudio
+  - --filesystem=host
+
+modules:
+  - name: pypi-dependencies
+    buildsystem: simple
+    build-commands: []
+    config-opts:
+      - --force-clean
+    modules:
+      - name: python3-PySide6
+        buildsystem: simple
+        build-commands:
+          - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
+            --prefix=${FLATPAK_DEST} "PySide6>=6.3.1" --no-build-isolation
+        sources:
+          - type: file
+            url: https://files.pythonhosted.org/packages/2c/2a/8e1b163571ecf093193a5cd97e0b1420eaff1ba13935c3e60da4bf71cd58/PySide6-6.3.1-cp36-abi3-manylinux_2_28_x86_64.whl
+            sha256: bc749968d641af1c516b6b0e00264bffea9cfc2d56dc04766f36e1a313e93a3a
+          - type: file
+            url: https://files.pythonhosted.org/packages/10/5b/f7b2b492bfeaf9cefce98a1e31b75af0cf316b7988f634ef824bd58d7d00/shiboken6-6.3.1-cp36-abi3-manylinux_2_28_x86_64.whl
+            sha256: aad9aa8e7ecd3c889cc789e41abf3990101126b5b02edfcf87f1ef331c9dc45a
+          - type: file
+            url: https://files.pythonhosted.org/packages/4c/a1/0562e98d39347530af4b03327bf66dde4a51f2420b64b8e6bfde005d6e70/PySide6_Essentials-6.3.1-cp36-abi3-manylinux_2_28_x86_64.whl
+            sha256: e27962beb2cc45fe13a1a1c24a454c3c3c3c3082c4a84bc5dcf6b306979ba013
+          - type: file
+            url: https://files.pythonhosted.org/packages/bb/6b/009c0077e5442a86ab067199fd92a96065900d955b0e7a73548128ae97a3/PySide6_Addons-6.3.1-cp36-abi3-manylinux_2_28_x86_64.whl
+            sha256: 14f4171b15dbdd7d120dc125c84f2eca53bc197182295bfdfdb3bb95b58a46c7
+  - name: myapp
+    buildsystem: simple
+    build-commands:
+      - install -D main.py /app/bin/main.py
+      - cp -R myapp /app/lib/python3.9/site-packages/
+    sources:
+      - type: dir
+        path: build/release
