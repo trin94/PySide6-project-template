@@ -6,14 +6,6 @@ runtime-version: '21.08'
 sdk: org.freedesktop.Sdk
 command: run-my-app
 
-# https://www.loganasherjones.com/2018/05/using-flatpak-with-python/
-#
-# Instructions:
-# 1. Set up the development environment for your OS (please have a look at the README.MD)
-# 2. Run 'make'
-# 3. Run: flatpak-builder build-dir org.github.trin94.pyside6.template.yml --force-clean
-# 4. Run: flatpak-builder --run build-dir org.github.trin94.pyside6.template.yml main.py
-
 finish-args:
   - --share=ipc
   - --socket=wayland
