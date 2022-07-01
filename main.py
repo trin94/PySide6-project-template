@@ -8,4 +8,5 @@ def main():
 
 
 if __name__ == '__main__':
+    print("Called from PySide6 project template")
     main()
