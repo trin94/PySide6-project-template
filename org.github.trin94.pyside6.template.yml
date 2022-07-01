@@ -4,6 +4,8 @@ app-id: org.github.trin94.pyside6.template
 #sdk: org.kde.Sdk
 runtime: org.freedesktop.Platform
 runtime-version: '21.08'
+base: io.qt.qtwebengine.BaseApp
+base-version: '6.2'
 sdk: org.freedesktop.Sdk
 command: run-my-app
 
