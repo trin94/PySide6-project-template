@@ -23,6 +23,13 @@ finish-args:
   - --filesystem=host
   - --device=dri
 
+cleanup:
+  - /include
+  - /lib/pkgconfig
+  - '*.la'
+  - '*.a'
+  - '*.pyc'
+
 modules:
   - name: pypi-dependencies
     buildsystem: simple
