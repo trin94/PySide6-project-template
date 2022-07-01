@@ -42,6 +42,8 @@ modules:
     post-install:
       - install -Dm644 ../krb5.conf -t ${FLATPAK_DEST}/etc/
     sources:
+      - type: file
+        path: build-aux/linux/krb5.conf
       - type: archive
         url: https://kerberos.org/dist/krb5/1.20/krb5-1.20.tar.gz
         sha256: 7e022bdd3c851830173f9faaa006a230a0e0fdad4c953e85bff4bf0da036e12f
@@ -50,8 +52,6 @@ modules:
           url: https://kerberos.org/dist/
           url-template: https://kerberos.org/dist/krb5/$version0.$version1/krb5-$version.tar.gz
           version-pattern: Kerberos V5 Release ([\d\.-]*) - current release
-      - type: file
-        path: krb5.conf
 
   - name: pypi-dependencies
     buildsystem: simple
