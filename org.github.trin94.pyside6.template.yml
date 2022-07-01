@@ -1,7 +1,4 @@
 app-id: org.github.trin94.pyside6.template
-#runtime: org.kde.Platform
-#runtime-version: '6.3'
-#sdk: org.kde.Sdk
 runtime: org.freedesktop.Platform
 runtime-version: '21.08'
 base: io.qt.qtwebengine.BaseApp
