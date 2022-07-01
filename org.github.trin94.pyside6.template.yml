@@ -10,9 +10,10 @@ command: main.py
 # https://www.loganasherjones.com/2018/05/using-flatpak-with-python/
 #
 # Instructions:
-# 1. Build the project (please follow 'normal' build instructions)
-# 2. Run: flatpak-builder build-dir org.github.trin94.pyside6.template.yml --force-clean
-# 3. Run: flatpak-builder --run build-dir org.github.trin94.pyside6.template.yml main.py
+# 1. Set up the development environment for your OS (please have a look at the README.MD)
+# 2. Run 'make'
+# 3. Run: flatpak-builder build-dir org.github.trin94.pyside6.template.yml --force-clean
+# 4. Run: flatpak-builder --run build-dir org.github.trin94.pyside6.template.yml main.py
 
 finish-args:
   - --share=ipc
@@ -47,6 +48,7 @@ modules:
           - type: file
             url: https://files.pythonhosted.org/packages/bb/6b/009c0077e5442a86ab067199fd92a96065900d955b0e7a73548128ae97a3/PySide6_Addons-6.3.1-cp36-abi3-manylinux_2_28_x86_64.whl
             sha256: 14f4171b15dbdd7d120dc125c84f2eca53bc197182295bfdfdb3bb95b58a46c7
+
   - name: myapp
     buildsystem: simple
     build-commands:
