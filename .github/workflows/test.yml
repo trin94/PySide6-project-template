@@ -12,9 +12,9 @@ jobs:
         python-version: [ '3.8', '3.9', '3.10' ]
     name: 'Python'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: 'Install Python'
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - name: 'Install pip'
@@ -40,11 +40,12 @@ jobs:
     runs-on: ubuntu-22.04
     name: 'Qml'
     steps:
-      - uses: actions/checkout@v2
-      - name: 'Install Qt 6.3.0'
-        uses: jurplel/install-qt-action@v2
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v3
+      - name: 'Install Qt 6.4.*'
+        uses: jurplel/install-qt-action@v3
         with:
-          version: '6.3.0'
+          version: '6.4.*'
       - name: 'Run Qml Tests'
         run: |
           export QT_QPA_PLATFORM=offscreen
