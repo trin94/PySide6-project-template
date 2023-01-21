@@ -63,20 +63,20 @@ modules:
         buildsystem: simple
         build-commands:
           - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
-            --prefix=${FLATPAK_DEST} "PySide6>=6.3.1" --no-build-isolation
+            --prefix=${FLATPAK_DEST} "PySide6>=6.4.2" --no-build-isolation
         sources:
           - type: file
-            url: https://files.pythonhosted.org/packages/2c/2a/8e1b163571ecf093193a5cd97e0b1420eaff1ba13935c3e60da4bf71cd58/PySide6-6.3.1-cp36-abi3-manylinux_2_28_x86_64.whl
-            sha256: bc749968d641af1c516b6b0e00264bffea9cfc2d56dc04766f36e1a313e93a3a
+            url: https://files.pythonhosted.org/packages/af/bc/45c2a5ed1e579dc919fa5b481f9df55108281243ec713fb79e20685deaf4/PySide6-6.4.2-cp37-abi3-manylinux_2_28_x86_64.whl
+            sha256: b9f132133e0681c5d1d47d533108cc9d35f96486251a9f23bdac6f3b6aa53a1c
           - type: file
-            url: https://files.pythonhosted.org/packages/10/5b/f7b2b492bfeaf9cefce98a1e31b75af0cf316b7988f634ef824bd58d7d00/shiboken6-6.3.1-cp36-abi3-manylinux_2_28_x86_64.whl
-            sha256: aad9aa8e7ecd3c889cc789e41abf3990101126b5b02edfcf87f1ef331c9dc45a
+            url: https://files.pythonhosted.org/packages/24/f6/f1fe9220a616789a1c6b1b73670d8b1dec882ac730a8b534f963b3f26182/shiboken6-6.4.2-cp37-abi3-manylinux_2_28_x86_64.whl
+            sha256: 0616c1a12d1e51e680595b3940b986275c1df952a751416a0730a59e5b90105f
           - type: file
-            url: https://files.pythonhosted.org/packages/4c/a1/0562e98d39347530af4b03327bf66dde4a51f2420b64b8e6bfde005d6e70/PySide6_Essentials-6.3.1-cp36-abi3-manylinux_2_28_x86_64.whl
-            sha256: e27962beb2cc45fe13a1a1c24a454c3c3c3c3082c4a84bc5dcf6b306979ba013
+            url: https://files.pythonhosted.org/packages/e5/96/f43cdcb397f8a8cff6991ef8109385cc5ad9b0ad78c6dc2988b3b776fe49/PySide6_Essentials-6.4.2-cp37-abi3-manylinux_2_28_x86_64.whl
+            sha256: 8c3d37cca6e27f6da12b50b20e741d593ccc857bdcdb82d97f8f7c8bfe53639a
           - type: file
-            url: https://files.pythonhosted.org/packages/bb/6b/009c0077e5442a86ab067199fd92a96065900d955b0e7a73548128ae97a3/PySide6_Addons-6.3.1-cp36-abi3-manylinux_2_28_x86_64.whl
-            sha256: 14f4171b15dbdd7d120dc125c84f2eca53bc197182295bfdfdb3bb95b58a46c7
+            url: https://files.pythonhosted.org/packages/05/5f/b5edac9f262d9cadafdeb9385089c7f81e5bc163a97fc3fa9ba49abac1ae/PySide6_Addons-6.4.2-cp37-abi3-manylinux_2_28_x86_64.whl
+            sha256: 5c06fa0e1bc6269b9e80e004f928eadc4c7f07bca51e41b375f79f3dc17c94ea
 
   - name: myapp
     buildsystem: simple
