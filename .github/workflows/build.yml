@@ -4,6 +4,10 @@ on:
   push:
     branches: [ '**' ]
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build_python:
     runs-on: ubuntu-22.04
@@ -76,6 +80,57 @@ jobs:
         run: |
           export QT_QPA_PLATFORM=offscreen
           make test-qml
+
+  distributable-windows:
+    runs-on: windows-latest
+    name: 'Build Windows'
+    if: github.ref_name == 'main'
+    needs:
+      - build_python
+      - test_qml
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v3
+      - name: 'Download Build Artifact'
+        uses: actions/download-artifact@v3
+        with:
+          path: build/release
+          name: release-build-artifact
+      - name: 'Install Python 3.11'
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      - name: 'Setup Build Environment'
+        run: |
+          python -m venv venv
+          source venv/Scripts/activate
+          python -m pip install --upgrade pip
+          python -m pip install wheel
+          python -m pip install -r requirements.txt
+          python -m pip install pyinstaller
+      - name: 'Build Bundle'
+        run: |
+          source venv/Scripts/activate
+          pyinstaller \
+            --name MpApp \
+            --workpath build-windows \
+            --icon=build-aux/windows/icon.ico \
+            --collect-binaries PySide6 \
+            --add-data "LICENSE;." \
+            --noconsole \
+            build/release/main.py
+      - name: 'Remove Redundant Binaries'
+        run: |
+          find dist/MpApp -type f -name 'Qt6WebEngineCore.dll' -delete
+          find dist/MpApp -type f -name 'opengl32sw.dll' -delete
+      - name: 'Compress Artifact'
+        shell: pwsh
+        run: Compress-Archive -Path "dist\MpApp\*" -DestinationPath "${{ needs.build_python.outputs.artifact_name }}.zip"
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          name: "${{ needs.build_python.outputs.artifact_name }}-win-x86_64"
+          path: "${{ needs.build_python.outputs.artifact_name }}.zip"
 
   distributable-linux:
     runs-on: ubuntu-22.04
