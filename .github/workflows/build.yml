@@ -62,7 +62,7 @@ jobs:
           make build
       - name: 'Upload Build Artifact'
         uses: actions/upload-artifact@v3
-        if: matrix.python-version == '3.11' # github.ref_name == 'main' &&
+        if: github.ref_name == 'main' && matrix.python-version == '3.11'
         with:
           path: build/release
           name: release-build-artifact
@@ -84,7 +84,7 @@ jobs:
   distributable-windows:
     runs-on: windows-latest
     name: 'Build Windows'
-#    if: github.ref_name == 'main'
+    if: github.ref_name == 'main'
     needs:
       - build_python
       - test_qml
