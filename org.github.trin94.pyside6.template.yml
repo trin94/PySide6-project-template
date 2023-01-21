@@ -1,3 +1,10 @@
+# Supposed to be called at repository root level - copied during CI build to root level
+#
+# To build:
+#   make
+#   flatpak-builder build-dir org.github.trin94.pyside6.template.yml --force-clean
+#   flatpak-builder --run build-dir org.github.trin94.pyside6.template.yml run-my-app
+
 app-id: org.github.trin94.pyside6.template
 runtime: org.freedesktop.Platform
 runtime-version: '22.08'
