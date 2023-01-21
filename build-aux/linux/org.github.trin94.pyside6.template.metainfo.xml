@@ -9,11 +9,16 @@
         <p>Description</p>
     </description>
     <supports>
-      <control>pointing</control>
-      <control>keyboard</control>
-      <control>touch</control>
+        <control>pointing</control>
+        <control>keyboard</control>
+        <control>touch</control>
     </supports>
     <releases>
+        <release date="2023-01-01" version="v0.0.1">
+            <description>
+                What's new?
+            </description>
+        </release>
     </releases>
     <project_group>run-my-app</project_group>
     <content_rating type="oars-1.1"/>
