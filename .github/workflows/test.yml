@@ -5,14 +5,28 @@ on:
     branches: [ '**' ]
 
 jobs:
-  test-python:
+  build_python:
     runs-on: ubuntu-22.04
+    name: 'Python'
     strategy:
       matrix:
         python-version: [ '3.8', '3.9', '3.10', '3.11' ]
-    name: 'Python'
+    outputs:
+      artifact_name: ${{ steps.step_artifact_name.outputs.artifact_name }}
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: 'Prepare Artifact Name'
+        id: step_artifact_name
+        run: |
+          CURRENT_COMMIT="$(git rev-parse HEAD)"
+          CURRENT_COMMIT="${CURRENT_COMMIT:0:8}"
+          echo "git commit: $CURRENT_COMMIT"
+
+          ARTIFACT_NAME="MyApp-$CURRENT_COMMIT"
+          echo "artifact name: $ARTIFACT_NAME"
+          echo "artifact_name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
       - name: 'Install Python'
         uses: actions/setup-python@v4
         with:
@@ -49,11 +63,11 @@ jobs:
           path: build/release
           name: release-build-artifact
 
-  test-qml:
+  test_qml:
     runs-on: ubuntu-22.04
     name: 'Qml'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: 'Install Qt 6.4.2'
         uses: jurplel/install-qt-action@v2
         with:
