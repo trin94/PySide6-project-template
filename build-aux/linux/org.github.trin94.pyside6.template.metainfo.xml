@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop">
+    <id>org.github.trin94.pyside6.template.desktop</id>
+    <metadata_license>CC0-1.0</metadata_license>
+    <project_license>LGPL-3.0-or-later</project_license>
+    <name>PySide6-Template</name>
+    <summary>Summary</summary>
+    <description>
+        <p>Description</p>
+    </description>
+    <supports>
+        <control>pointing</control>
+        <control>keyboard</control>
+        <control>touch</control>
+    </supports>
+    <releases>
+        <release date="2023-01-01" version="v0.0.1">
+            <description>
+                What's new?
+            </description>
+        </release>
+    </releases>
+    <project_group>run-my-app</project_group>
+    <content_rating type="oars-1.1"/>
+    <url type="homepage">https://github.com/trin94/PySide6-project-template</url>
+    <url type="bugtracker">https://github.com/trin94/PySide6-project-template/issues</url>
+    <update_contact>elias.mr1@gmail.com</update_contact>
+</component>

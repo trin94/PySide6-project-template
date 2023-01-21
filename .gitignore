@@ -522,5 +522,7 @@ $RECYCLE.BIN/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,pycharm,qt,qtcreator,vscode,sublimetext,qml,linux,windows,macos,vim,emacs
 
+.flatpak-builder
+build-dir
 myapp/generated_resources.py
 test/generated_resources.py

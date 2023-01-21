@@ -1,0 +1,108 @@
+name: 'Build'
+
+on:
+  push:
+    branches: [ '**' ]
+
+jobs:
+  build_python:
+    runs-on: ubuntu-22.04
+    name: 'Python'
+    strategy:
+      matrix:
+        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
+    outputs:
+      artifact_name: ${{ steps.step_artifact_name.outputs.artifact_name }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: 'Prepare Artifact Name'
+        id: step_artifact_name
+        run: |
+          CURRENT_COMMIT="$(git rev-parse HEAD)"
+          CURRENT_COMMIT="${CURRENT_COMMIT:0:8}"
+          echo "git commit: $CURRENT_COMMIT"
+
+          ARTIFACT_NAME="MyApp-$CURRENT_COMMIT"
+          echo "artifact name: $ARTIFACT_NAME"
+          echo "artifact_name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
+      - name: 'Install Python'
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: 'Install pip'
+        run: |
+          python -m pip install --upgrade pip
+      - name: 'Update Packages'
+        run: |
+          sudo apt update -y && sudo apt upgrade -y
+      - name: 'Install Dependencies'
+        run: |
+          sudo apt install -y make patchelf libopengl0 libegl-dev
+      - name: 'Create Virtual Environment'
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install wheel
+          python -m pip install -r requirements.txt
+      - name: 'Remove Qml Test Files'
+        run: |
+          find . -type f -name 'tst_*.qml' -delete
+      - name: 'Run Python Tests'
+        run: |
+          source venv/bin/activate
+          make test-python
+          make clean
+          make build
+      - name: 'Upload Build Artifact'
+        uses: actions/upload-artifact@v3
+        if: github.ref_name == 'main' && matrix.python-version == '3.11'
+        with:
+          path: build/release
+          name: release-build-artifact
+
+  test_qml:
+    runs-on: ubuntu-22.04
+    name: 'Qml'
+    steps:
+      - uses: actions/checkout@v3
+      - name: 'Install Qt 6.4.2'
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.4.2'
+      - name: 'Run Qml Tests'
+        run: |
+          export QT_QPA_PLATFORM=offscreen
+          make test-qml
+
+  distributable-linux:
+    runs-on: ubuntu-22.04
+    if: github.ref_name == 'main'
+    name: 'Build Linux (Flatpak)'
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:freedesktop-22.08
+      options: --privileged
+    needs:
+      - build_python
+      - test_qml
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v3
+      - name: 'Download Build Artifact'
+        uses: actions/download-artifact@v3
+        with:
+          path: build/release
+          name: release-build-artifact
+      - name: 'Prepare Flatpak Build'
+        run: |
+          mv build-aux/linux/org.github.trin94.pyside6.template.yml org.github.trin94.pyside6.template.yml
+      - name: 'Build Flatpak'
+        uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+        with:
+          manifest-path: org.github.trin94.pyside6.template.yml
+          bundle: ${{ needs.build_python.outputs.artifact_name }}-linux.flatpak
+          branch: main
+          cache: false
+          cache-key: flatpak-builder-${{ github.sha }}

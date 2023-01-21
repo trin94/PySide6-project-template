@@ -1,0 +1,121 @@
+# Supposed to be called at repository root level - copied during CI build to root level
+#
+# To build:
+#   make
+#   flatpak-builder build-dir org.github.trin94.pyside6.template.yml --force-clean
+#   flatpak-builder --run build-dir org.github.trin94.pyside6.template.yml run-my-app
+
+app-id: org.github.trin94.pyside6.template
+runtime: org.freedesktop.Platform
+runtime-version: '22.08'
+sdk: org.freedesktop.Sdk
+command: run-my-app
+
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --socket=pulseaudio
+  - --filesystem=host
+  - --device=dri
+
+build-options:
+  cflags: -O2 -g
+  cxxflags: -O2 -g
+  env:
+    V: '1'
+
+cleanup:
+  - /include
+  - /lib/debug
+  - /lib/pkgconfig
+  - /lib/python3.11/site-packages/PySide6/examples
+  - /lib/python3.11/site-packages/PySide6/lupdate
+  - /lib/python3.11/site-packages/PySide6/assistant
+  - /lib/python3.11/site-packages/PySide6/qmllint
+  - /lib/python3.11/site-packages/PySide6/linguist
+  - /lib/python3.11/site-packages/PySide6/Qt/lib/libQt6WebEngineCore.so.6
+  - /lib/python3.11/site-packages/PySide6/Qt/translations/qtwebengine_locales
+  - /lib/python3.11/site-packages/PySide6/Qt/resources
+  - /man
+  - /share/doc
+  - /share/gtk-doc
+  - /share/man
+  - '*.la'
+  - '*.a'
+
+modules:
+  - name: python
+    sources:
+      - type: archive
+        url: https://www.python.org/ftp/python/3.11.1/Python-3.11.1.tar.xz
+        sha256: 85879192f2cffd56cb16c092905949ebf3e5e394b7f764723529637901dfb58f
+
+  # https://github.com/flathub/io.qt.qtwebengine.BaseApp/tree/branch/6.2/krb5
+  - name: krb5
+    subdir: src
+    cleanup:
+      - /bin
+      - /share/et
+      - /share/examples
+      - /share/man
+    config-opts:
+      - --localstatedir=/var/lib
+      - --sbindir=${FLATPAK_DEST}/bin
+      - --disable-rpath
+      - --disable-static
+    post-install:
+      - install -Dm644 ../krb5.conf -t ${FLATPAK_DEST}/etc/
+    sources:
+      - type: file
+        path: build-aux/linux/krb5.conf
+      - type: archive
+        url: https://kerberos.org/dist/krb5/1.20/krb5-1.20.tar.gz
+        sha256: 7e022bdd3c851830173f9faaa006a230a0e0fdad4c953e85bff4bf0da036e12f
+        x-checker-data:
+          type: html
+          url: https://kerberos.org/dist/
+          url-template: https://kerberos.org/dist/krb5/$version0.$version1/krb5-$version.tar.gz
+          version-pattern: Kerberos V5 Release ([\d\.-]*) - current release
+
+  - name: pypi-dependencies
+    buildsystem: simple
+    build-commands: [ ]
+    config-opts:
+      - --force-clean
+    modules:
+      - name: python3-PySide6
+        buildsystem: simple
+        build-commands:
+          - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
+            --prefix=${FLATPAK_DEST} "PySide6>=6.4.2" --no-build-isolation
+        sources:
+          - type: file
+            url: https://files.pythonhosted.org/packages/af/bc/45c2a5ed1e579dc919fa5b481f9df55108281243ec713fb79e20685deaf4/PySide6-6.4.2-cp37-abi3-manylinux_2_28_x86_64.whl
+            sha256: b9f132133e0681c5d1d47d533108cc9d35f96486251a9f23bdac6f3b6aa53a1c
+          - type: file
+            url: https://files.pythonhosted.org/packages/24/f6/f1fe9220a616789a1c6b1b73670d8b1dec882ac730a8b534f963b3f26182/shiboken6-6.4.2-cp37-abi3-manylinux_2_28_x86_64.whl
+            sha256: 0616c1a12d1e51e680595b3940b986275c1df952a751416a0730a59e5b90105f
+          - type: file
+            url: https://files.pythonhosted.org/packages/e5/96/f43cdcb397f8a8cff6991ef8109385cc5ad9b0ad78c6dc2988b3b776fe49/PySide6_Essentials-6.4.2-cp37-abi3-manylinux_2_28_x86_64.whl
+            sha256: 8c3d37cca6e27f6da12b50b20e741d593ccc857bdcdb82d97f8f7c8bfe53639a
+          - type: file
+            url: https://files.pythonhosted.org/packages/05/5f/b5edac9f262d9cadafdeb9385089c7f81e5bc163a97fc3fa9ba49abac1ae/PySide6_Addons-6.4.2-cp37-abi3-manylinux_2_28_x86_64.whl
+            sha256: 5c06fa0e1bc6269b9e80e004f928eadc4c7f07bca51e41b375f79f3dc17c94ea
+
+  - name: myapp
+    buildsystem: simple
+    build-commands:
+      - mkdir -p /app/app-directory
+      - cp -r myapp /app/app-directory
+      - install -D main.py /app/app-directory
+      - install -Dm644 org.github.trin94.pyside6.template.svg /app/share/icons/hicolor/scalable/apps/org.github.trin94.pyside6.template.svg
+      - install -Dm644 org.github.trin94.pyside6.template.desktop /app/share/applications/org.github.trin94.pyside6.template.desktop
+      - install -Dm644 org.github.trin94.pyside6.template.metainfo.xml -t /app/share/metainfo
+      - sed -i 's|/usr/bin/env python|/app/bin/python3|' /app/app-directory/main.py
+      - ln -s /app/app-directory/main.py /app/bin/run-my-app
+    sources:
+      - type: dir
+        path: build/release
+      - type: dir
+        path: build-aux/linux
