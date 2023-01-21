@@ -13,7 +13,7 @@
 
 1. Clone this repository
 1. Open git-bash in the directory
-1. Setup virtual environment:
+1. Set up virtual environment:
     1. `python -m venv venv`
     1. `source venv/Scripts/activate`
 1. Install requirements `python -m pip install -r requirements.txt`
