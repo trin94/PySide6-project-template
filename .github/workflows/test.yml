@@ -1,4 +1,4 @@
-name: 'Test'
+name: 'Build'
 
 on:
   push:
@@ -30,12 +30,25 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
+          python -m pip install --upgrade pip
           python -m pip install wheel
           python -m pip install -r requirements.txt
+      - name: 'Remove Qml Test Files'
+        run: |
+          find . -type f -name 'tst_*.qml' -delete
       - name: 'Run Python Tests'
         run: |
           source venv/bin/activate
           make test-python
+          make clean
+          make build
+      - name: 'Upload Build Artifact'
+        uses: actions/upload-artifact@v3
+        if: github.ref_name == 'main' && matrix.python-version == '3.11'
+        with:
+          path: build/release
+          name: release-build-artifact
+
   test-qml:
     runs-on: ubuntu-22.04
     name: 'Qml'
