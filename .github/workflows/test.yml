@@ -76,3 +76,33 @@ jobs:
         run: |
           export QT_QPA_PLATFORM=offscreen
           make test-qml
+
+  distributable-linux:
+    runs-on: ubuntu-22.04
+#    if: github.ref_name == 'main'
+    name: 'Build Linux (Flatpak)'
+    container:
+      image: bilelmoussaoui/flatpak-github-actions:freedesktop-22.08
+      options: --privileged
+    needs:
+      - build_python
+      - test_qml
+    steps:
+      - name: 'Checkout Repository'
+        uses: actions/checkout@v3
+      - name: 'Download Build Artifact'
+        uses: actions/download-artifact@v3
+        with:
+          path: build/release
+          name: release-build-artifact
+      - name: 'Prepare Flatpak Build'
+        run: |
+          mv build-aux/linux/org.github.trin94.pyside6.template.yml org.github.trin94.pyside6.template.yml
+      - name: 'Build Flatpak'
+        uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
+        with:
+          manifest-path: org.github.trin94.pyside6.template.yml
+          bundle: ${{ needs.build_python.outputs.artifact_name }}-linux.flatpak
+          branch: main
+          cache: false
+          cache-key: flatpak-builder-${{ github.sha }}
