@@ -109,8 +109,13 @@ modules:
       - mkdir -p /app/app-directory
       - cp -r myapp /app/app-directory
       - install -D main.py /app/app-directory
+      - install -Dm644 org.github.trin94.pyside6.template.svg /app/share/icons/hicolor/scalable/apps/org.github.trin94.pyside6.template.svg
+      - install -Dm644 org.github.trin94.pyside6.template.desktop /app/share/applications/org.github.trin94.pyside6.template.desktop
+      - install -Dm644 org.github.trin94.pyside6.template.metainfo.xml -t /app/share/metainfo
       - sed -i 's|/usr/bin/env python|/app/bin/python3|' /app/app-directory/main.py
       - ln -s /app/app-directory/main.py /app/bin/run-my-app
     sources:
       - type: dir
         path: build/release
+      - type: dir
+        path: build-aux/linux
