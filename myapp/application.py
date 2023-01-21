@@ -24,7 +24,7 @@
 
 import sys
 
-from PySide6.QtCore import QUrl, QTranslator, QLocale
+from PySide6.QtCore import QUrl, QTranslator, QLocale, QLibraryInfo
 from PySide6.QtGui import QGuiApplication, QIcon
 from PySide6.QtQml import QQmlApplicationEngine
 
@@ -34,14 +34,12 @@ class MyApplication(QGuiApplication):
     def __init__(self, args):
         super().__init__(args)
         self._engine = QQmlApplicationEngine()
-        self._translator = QTranslator()
+        self._translator_myapp = QTranslator()
+        self._translator_qt = QTranslator()
 
     def set_window_icon(self):
         icon = QIcon(':/data/app-icon.svg')
         self.setWindowIcon(icon)
-
-    def set_up_internationalization(self):
-        self.installTranslator(self._translator)
 
     def set_up_signals(self):
         self.aboutToQuit.connect(self._on_quit)
@@ -52,7 +50,16 @@ class MyApplication(QGuiApplication):
 
     def _retranslate(self):
         locale = QLocale(self._engine.uiLanguage())
-        self._translator.load(f':/i18n/{locale.name()}.qm')
+
+        self.removeTranslator(self._translator_qt)
+        self.removeTranslator(self._translator_myapp)
+
+        self._translator_qt.load(locale, "qtbase", "_", QLibraryInfo.location(QLibraryInfo.TranslationsPath))
+        self._translator_myapp.load(f':/i18n/{locale.name()}.qm')
+
+        self.installTranslator(self._translator_qt)
+        self.installTranslator(self._translator_myapp)
+
         self.setLayoutDirection(locale.textDirection())
 
     def set_up_imports(self):
