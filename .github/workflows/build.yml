@@ -58,7 +58,7 @@ jobs:
           make build
       - name: 'Upload Build Artifact'
         uses: actions/upload-artifact@v3
-        if: matrix.python-version == '3.11' # github.ref_name == 'main' &&
+        if: github.ref_name == 'main' && matrix.python-version == '3.11'
         with:
           path: build/release
           name: release-build-artifact
@@ -79,7 +79,7 @@ jobs:
 
   distributable-linux:
     runs-on: ubuntu-22.04
-#    if: github.ref_name == 'main'
+    if: github.ref_name == 'main'
     name: 'Build Linux (Flatpak)'
     container:
       image: bilelmoussaoui/flatpak-github-actions:freedesktop-22.08
