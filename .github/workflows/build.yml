@@ -4,6 +4,10 @@ on:
   push:
     branches: [ '**' ]
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build_python:
     runs-on: ubuntu-22.04
