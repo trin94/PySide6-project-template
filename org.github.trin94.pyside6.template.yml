@@ -14,17 +14,29 @@ finish-args:
 
 cleanup:
   - /include
+  - /lib/debug
   - /lib/pkgconfig
+  - /lib/python3.11/site-packages/PySide6/examples
+  - /lib/python3.11/site-packages/PySide6/lupdate
+  - /lib/python3.11/site-packages/PySide6/assistant
+  - /lib/python3.11/site-packages/PySide6/qmllint
+  - /lib/python3.11/site-packages/PySide6/linguist
+  - /lib/python3.11/site-packages/PySide6/Qt/lib/libQt6WebEngineCore.so.6
+  - /lib/python3.11/site-packages/PySide6/Qt/translations/qtwebengine_locales
+  - /lib/python3.11/site-packages/PySide6/Qt/resources
+  - /man
+  - /share/doc
+  - /share/gtk-doc
+  - /share/man
   - '*.la'
   - '*.a'
-  - '*.pyc'
 
 modules:
   - name: python
     sources:
       - type: archive
-        url: https://www.python.org/ftp/python/3.10.5/Python-3.10.5.tar.xz
-        sha256: 8437efd5b106ef0a75aabfbf23d880625120a73a86a22ade4d2e2e68d7b74486
+        url: https://www.python.org/ftp/python/3.11.1/Python-3.11.1.tar.xz
+        sha256: 85879192f2cffd56cb16c092905949ebf3e5e394b7f764723529637901dfb58f
 
   # https://github.com/flathub/io.qt.qtwebengine.BaseApp/tree/branch/6.2/krb5
   - name: krb5
