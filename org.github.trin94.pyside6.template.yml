@@ -1,6 +1,6 @@
 app-id: org.github.trin94.pyside6.template
 runtime: org.freedesktop.Platform
-runtime-version: '21.08'
+runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
 command: run-my-app
 
