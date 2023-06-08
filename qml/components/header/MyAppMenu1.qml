@@ -44,7 +44,7 @@ MyAppAutoWidthMenu {
         text: qsTranslate("HeaderBar", "&Action 3")
 
         onTriggered: {
-            console.log("Action 1 pressed")
+            console.log("Action 3 pressed")
         }
     }
 
