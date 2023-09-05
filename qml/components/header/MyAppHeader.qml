@@ -28,7 +28,11 @@ Item {
 
         onTapped: {
             if (tapCount === 2) {
-                utils.toggleMaximized()
+                if (appWindow.visibility === Window.Maximized) {
+                    appWindow.showNormal()
+                } else {
+                    appWindow.showMaximized()
+                }
             }
         }
     }
