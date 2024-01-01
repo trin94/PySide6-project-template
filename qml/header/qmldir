@@ -1,2 +1,2 @@
-module components.header
+module header
 MyAppHeader MyAppHeader.qml
