@@ -1,2 +1,2 @@
-qmldir components
+qmldir app
 MyAppMainPage MyAppMainPage.qml
