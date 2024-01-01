@@ -72,10 +72,10 @@ jobs:
     name: 'Qml'
     steps:
       - uses: actions/checkout@v4
-      - name: 'Install Qt 6.4.2'
+      - name: 'Install Qt 6.6.*'
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.4.2'
+          version: '6.6.*'
       - name: 'Run Qml Tests'
         run: |
           export QT_QPA_PLATFORM=offscreen
