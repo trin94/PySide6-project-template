@@ -4,5 +4,5 @@ Icon=org.github.trin94.pyside6.template.svg
 Exec=run-my-app
 Terminal=false
 Type=Application
-Categories=
+Categories=Utility
 StartupNotify=true
