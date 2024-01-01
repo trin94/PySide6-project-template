@@ -14,7 +14,7 @@ jobs:
     name: 'Python'
     strategy:
       matrix:
-        python-version: [ '3.8', '3.9', '3.10', '3.11' ]
+        python-version: [ '3.8', '3.9', '3.10', '3.11', '3.12' ]
     outputs:
       artifact_name: ${{ steps.step_artifact_name.outputs.artifact_name }}
     steps:
@@ -62,7 +62,7 @@ jobs:
           make build
       - name: 'Upload Build Artifact'
         uses: actions/upload-artifact@v4
-        if: github.ref_name == 'main' && matrix.python-version == '3.11'
+        if: github.ref_name == 'main' && matrix.python-version == '3.12'
         with:
           path: build/release
           name: release-build-artifact
@@ -96,10 +96,10 @@ jobs:
         with:
           path: build/release
           name: release-build-artifact
-      - name: 'Install Python 3.11'
+      - name: 'Install Python 3.12'
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"
       - name: 'Setup Build Environment'
         run: |
           python -m venv venv
