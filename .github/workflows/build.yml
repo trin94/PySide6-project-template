@@ -10,7 +10,7 @@ defaults:
 
 jobs:
   build_python:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     name: 'Python'
     strategy:
       matrix:
@@ -43,7 +43,9 @@ jobs:
           sudo apt update -y && sudo apt upgrade -y
       - name: 'Install Dependencies'
         run: |
-          sudo apt install -y make patchelf libopengl0 libegl-dev
+          sudo apt install -y patchelf libopengl0 libegl-dev
+      - name: 'Install just'
+        uses: taiki-e/install-action@just
       - name: 'Create Virtual Environment'
         run: |
           python -m venv venv
@@ -57,9 +59,9 @@ jobs:
       - name: 'Run Python Tests'
         run: |
           source venv/bin/activate
-          make test-python
-          make clean
-          make build
+          just test-python
+          just clean
+          just build
       - name: 'Upload Build Artifact'
         uses: actions/upload-artifact@v4
         if: github.ref_name == 'main' && matrix.python-version == '3.12'
@@ -68,7 +70,7 @@ jobs:
           name: release-build-artifact
 
   test_qml:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     name: 'Qml'
     steps:
       - uses: actions/checkout@v4
@@ -76,10 +78,12 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: '6.6.*'
+      - name: 'Install just'
+        uses: taiki-e/install-action@just
       - name: 'Run Qml Tests'
         run: |
           export QT_QPA_PLATFORM=offscreen
-          make test-qml
+          just test-qml
 
   distributable-windows:
     runs-on: windows-latest
@@ -133,7 +137,7 @@ jobs:
           path: "${{ needs.build_python.outputs.artifact_name }}.zip"
 
   distributable-linux:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: github.ref_name == 'main'
     name: 'Build Linux (Flatpak)'
     container:

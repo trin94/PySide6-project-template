@@ -21,7 +21,7 @@ Project template to get started with PySide6 and QtQuick quickly without worryin
 ## First Steps
 
 1. Set up the development environment for your OS (please look [here](docs/developer) for a guide)
-2. Run `make develop-build` to compile resources
+2. Run `just build-develop` to compile resources
 3. Run `python main.py` to start the app
 
 ## Read Further
@@ -40,6 +40,7 @@ Project template to get started with PySide6 and QtQuick quickly without worryin
 
 * PySide6 https://pypi.org/project/PySide6/
 * PyTest https://pypi.org/project/pytest/
+* Just https://github.com/casey/just
 
 * App Icon: https://commons.wikimedia.org/wiki/File:Qt_logo_2016.svg
 * Material Icons: https://fonts.google.com/icons?selected=Material+Icons

@@ -3,7 +3,7 @@
 ## Tools
 
 * Make sure `python` is on version **3.8** or later
-* Install `make`
+* Install `just` (https://github.com/casey/just)
 
 ## Checkout
 
