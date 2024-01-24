@@ -9,9 +9,9 @@ defaults:
     shell: bash
 
 jobs:
-  build_python:
+  build_python_linux:
     runs-on: ubuntu-latest
-    name: 'Python'
+    name: 'Python (Linux)'
     strategy:
       matrix:
         python-version: [ '3.8', '3.9', '3.10', '3.11', '3.12' ]
@@ -69,6 +69,52 @@ jobs:
           path: build/release
           name: release-build-artifact
 
+  build_python_windows:
+    runs-on: windows-latest
+    name: 'Python (Windows)'
+    strategy:
+      matrix:
+        python-version: [ '3.8', '3.9', '3.10', '3.11', '3.12' ]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: 'Prepare Artifact Name'
+        id: step_artifact_name
+        run: |
+          CURRENT_COMMIT="$(git rev-parse HEAD)"
+          CURRENT_COMMIT="${CURRENT_COMMIT:0:8}"
+          echo "git commit: $CURRENT_COMMIT"
+
+          ARTIFACT_NAME="MyApp-$CURRENT_COMMIT"
+          echo "artifact name: $ARTIFACT_NAME"
+          echo "artifact_name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
+      - name: 'Install Python'
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: 'Install pip'
+        run: |
+          python -m pip install --upgrade pip
+      - name: 'Install just'
+        uses: taiki-e/install-action@just
+      - name: 'Create Virtual Environment'
+        run: |
+          python -m venv venv
+          source venv/Scripts/activate
+          python -m pip install --upgrade pip
+          python -m pip install wheel
+          python -m pip install -r requirements.txt
+      - name: 'Remove Qml Test Files'
+        run: |
+          find . -type f -name 'tst_*.qml' -delete
+      - name: 'Run Python Tests'
+        run: |
+          source venv/Scripts/activate
+          just test-python
+          just clean
+          just build
+
   test_qml:
     runs-on: ubuntu-latest
     name: 'Qml'
@@ -90,7 +136,8 @@ jobs:
     name: 'Build Windows'
     if: github.ref_name == 'main'
     needs:
-      - build_python
+      - build_python_linux
+      - build_python_windows
       - test_qml
     steps:
       - name: 'Checkout Repository'
@@ -129,12 +176,12 @@ jobs:
           find dist/MpApp -type f -name 'opengl32sw.dll' -delete
       - name: 'Compress Artifact'
         shell: pwsh
-        run: Compress-Archive -Path "dist\MpApp\*" -DestinationPath "${{ needs.build_python.outputs.artifact_name }}.zip"
+        run: Compress-Archive -Path "dist\MpApp\*" -DestinationPath "${{ needs.build_python_linux.outputs.artifact_name }}.zip"
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ needs.build_python.outputs.artifact_name }}-win-x86_64"
-          path: "${{ needs.build_python.outputs.artifact_name }}.zip"
+          name: "${{ needs.build_python_linux.outputs.artifact_name }}-win-x86_64"
+          path: "${{ needs.build_python_linux.outputs.artifact_name }}.zip"
 
   distributable-linux:
     runs-on: ubuntu-latest
@@ -144,7 +191,8 @@ jobs:
       image: bilelmoussaoui/flatpak-github-actions:freedesktop-22.08
       options: --privileged
     needs:
-      - build_python
+      - build_python_linux
+      - build_python_windows
       - test_qml
     steps:
       - name: 'Checkout Repository'
@@ -161,7 +209,7 @@ jobs:
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
           manifest-path: org.github.trin94.pyside6.template.yml
-          bundle: ${{ needs.build_python.outputs.artifact_name }}-linux.flatpak
+          bundle: ${{ needs.build_python_linux.outputs.artifact_name }}-linux.flatpak
           branch: main
           cache: false
           cache-key: flatpak-builder-${{ github.sha }}
