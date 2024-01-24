@@ -10,7 +10,7 @@ defaults:
 
 jobs:
   build_python:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     name: 'Python'
     strategy:
       matrix:
@@ -68,7 +68,7 @@ jobs:
           name: release-build-artifact
 
   test_qml:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     name: 'Qml'
     steps:
       - uses: actions/checkout@v4
@@ -133,7 +133,7 @@ jobs:
           path: "${{ needs.build_python.outputs.artifact_name }}.zip"
 
   distributable-linux:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     if: github.ref_name == 'main'
     name: 'Build Linux (Flatpak)'
     container:
