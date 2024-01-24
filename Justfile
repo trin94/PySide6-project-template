@@ -19,7 +19,7 @@ PYTHON := PYTHON_DIR + if os_family() == 'windows' { '/python.exe' } else { '/py
 TOOL_CLI_LUPDATE := PYTHON_DIR + '/pyside6-lupdate'
 TOOL_CLI_LRELEASE := PYTHON_DIR + '/pyside6-lrelease'
 TOOL_CLI_RCC := PYTHON_DIR + '/pyside6-rcc'
-TOOL_CLI_QML_TESTRUNNER := 'qmltestrunner-qt6'
+TOOL_CLI_QML_TESTRUNNER := 'qmltestrunner'
 
 export QT_QPA_PLATFORM := 'offscreen'
 
