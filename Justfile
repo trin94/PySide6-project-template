@@ -13,7 +13,7 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-PYTHON_DIR := justfile_directory() + '/' + if os_family() == 'windows' { 'venv/Scripts' } else { 'venv/bin' }
+PYTHON_DIR := invocation_directory() + '/' + if os_family() == 'windows' { 'venv/Scripts' } else { 'venv/bin' }
 PYTHON := PYTHON_DIR + if os_family() == 'windows' { '/python.exe' } else { '/python3' }
 
 TOOL_CLI_LUPDATE := PYTHON_DIR + '/pyside6-lupdate'
@@ -44,7 +44,7 @@ NAME_FILE_GENERATED_RESOURCES := 'generated_resources.py'
 #####                      #####
 ##### Existing Directories #####
 #####                      #####
-DIRECTORY_ROOT := justfile_directory()
+DIRECTORY_ROOT := invocation_directory()
 DIRECTORY_BUILD_HELPERS := DIRECTORY_ROOT + '/' + NAME_DIRECTORY_BUILD_HELPERS
 DIRECTORY_DATA := DIRECTORY_ROOT + '/' + NAME_DIRECTORY_DATA
 DIRECTORY_I18N := DIRECTORY_ROOT + '/' + NAME_DIRECTORY_I18N
