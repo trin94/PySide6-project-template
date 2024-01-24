@@ -133,23 +133,15 @@ update-translations: _check-pyside-setup _prepare-translation-extractions
 		{{DIRECTORY_BUILD_TRANSLATIONS}}/{{NAME_DIRECTORY_I18N}}/*.ts \
 		{{DIRECTORY_I18N}}
 
-#create-new-translation: \
-#	check-pyside-setup \
-#	xtask-prepare-translation-extractions
-#
-#	@# Allows to add translations to the project: make create-new-translation lang=<locale>
-#
-#ifeq ($(lang), $(''))
-#	@echo "Usage: 'make create-new-translation lang=<locale>'"
-#else
-#	@cd ${DIRECTORY_BUILD_TRANSLATIONS}; \
-#		${TOOL_CLI_LUPDATE} \
-#			-verbose \
-#			-source-language en \
-#			-target-language $(lang) \
-#			-ts ${DIRECTORY_I18N}/$(lang).ts
-#	@$(MAKE) -s -f $(MAKE_FILE) update-translations
-#endif
+add-translation locale: _check-pyside-setup _prepare-translation-extractions
+    @cd {{DIRECTORY_BUILD_TRANSLATIONS}}; \
+        {{TOOL_CLI_LUPDATE}} \
+            -verbose \
+            -source-language en_US \
+            -target-language {{locale}} \
+            -ts {{DIRECTORY_I18N}}/{{locale}}.ts
+    @echo ''
+    @just update-translations
 
 clean: _clean-build _clean-develop _clean-test
 
