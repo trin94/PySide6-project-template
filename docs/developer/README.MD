@@ -5,57 +5,29 @@
 
 This project assumes that a virtual environment is used.
 
-# Makefile targets
+# Just recipes
 
-For a complete overview please look into the Makefile. The most important targets are documented here:
-
-* `check-pyside-setup`  
-  Checks if PySide is correctly set up
-* `check-qml-setup`  
-  Checks if Qml (for tests only) is correctly set up
-
-
-* `build`  
-  Builds the project into build/release/myapp
-* `build-clean`  
-  Cleans up the build directory
-
-
-* `test`  
-  Runs all tests
-* `test-python`  
-  Runs all Python tests
-* `test-qml`  
-  Runs all Qml tests
-* `test-clean`  
-  Cleans up the compiled resources in the test directory
-
-
-* `develop-build`  
-  Generates resources and copies them into the source directory.  
-  This allows to develop/debug the project normally
-* `develop-clean`  
-  Cleans up the compiled resources in the source directory
-
-
-* `update-translations`  
-  Traverses *qml* & *py* files to update translation files
-* `create-new-translation`  
-  Allows to add translations to the
-  project: `make create-new-translation lang=<locale>` (`make create-new-translation lang=es`)
-
-
-* `clean`  
-  Cleans up **all** generated files
+```shell
+$ just --list
+Available recipes:
+    add-translation locale    # Allows adding additional languages
+    build                     # Builds the project into build/release
+    build-develop             # Builds the project. This will add all compiled resources into the Python source directory.
+    clean                     # Removes ALL generated files
+    test                      # Runs all Python and QML tests
+    test-python               # Runs all Python tests
+    test-qml                  # Runs all QML tests
+    update-translations       # Traverses QML and Python files and updates translation files with new strings
+```
 
 # Workflow
 
-Run `make develop-build` after each change in the `data`, `i18n`, or `qml` directories.
+Run `just build-develop` after each change in the `data`, `i18n`, or `qml` directories.
 This will *compile* everything into a Python file and move it into the `myapp` directory
 where it will be picked up on app start.
 
 # Tips
 
 * If you're on Linux, and you're using PyCharm or something similar:
-  Create a run configuration that runs the `develop-build` makefile target before the application.
+  Create a run configuration that runs the `build-develop` recipe before the application.
 * Adding new languages is described [here](internationalization.md)

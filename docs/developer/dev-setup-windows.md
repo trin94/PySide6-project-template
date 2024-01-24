@@ -4,10 +4,9 @@
 
 1. Install  [python v3.8+](https://www.python.org/downloads/)
 1. Install  [git-bash](https://git-scm.com/downloads)
-1. Install [chocolatey](https://chocolatey.org/install)
-1. Open powershell as admin and run: `choco install make`
+1. Install [just](https://github.com/casey/just)
 
-**The make build system is supposed to be used from git-bash**
+**just is supposed to be used from git-bash**
 
 ## Checkout
 
