@@ -1,2 +1,3 @@
 PySide6>=6.6.1
 pytest>=7.4.4
+pywin32>=306; sys_platform == 'win32'

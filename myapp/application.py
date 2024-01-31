@@ -1,20 +1,20 @@
-# Copyright 2023
+# Copyright
 #
 # This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
+# it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU Lesser General Public License for more details.
+# GNU General Public License for more details.
 #
-# You should have received a copy of the GNU Lesser General Public License
+# You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-
+import platform
 import sys
 
 from PySide6.QtCore import QUrl, QTranslator, QLocale, QLibraryInfo
@@ -58,8 +58,26 @@ class MyApplication(QGuiApplication):
     def set_up_imports(self):
         self._engine.addImportPath(':/qml')
 
+    def set_up_window_event_filter(self):
+        if platform.system() == "Windows":
+            from myapp.framelesswindow.win import WindowsEventFilter
+            self._event_filter = WindowsEventFilter(border_width=5)
+            self.installNativeEventFilter(self._event_filter)
+        elif platform.system() == 'Linux':
+            from myapp.framelesswindow.linux import LinuxEventFilter
+            self._event_filter = LinuxEventFilter(border_width=5)
+            self.installEventFilter(self._event_filter)
+
     def start_engine(self):
         self._engine.load(QUrl.fromLocalFile(':/qml/main.qml'))
+
+    def set_up_window_effects(self):
+        if sys.platform == 'win32':
+            hwnd = self.topLevelWindows()[0].winId()
+            from myapp.framelesswindow.win import WindowsWindowEffect
+            self._effects = WindowsWindowEffect()
+            self._effects.addShadowEffect(hwnd)
+            self._effects.addWindowAnimation(hwnd)
 
     def verify(self):
         if not self._engine.rootObjects():
