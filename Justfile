@@ -23,9 +23,9 @@ TOOL_CLI_QML_TESTRUNNER := 'qmltestrunner'
 
 export QT_QPA_PLATFORM := 'offscreen'
 
-#####       #####
+#####      #####
 ##### Names #####
-#####       #####
+#####      #####
 NAME_APPLICATION := 'myapp'
 
 NAME_DIRECTORY_BUILD := 'build'
@@ -41,9 +41,9 @@ NAME_DIRECTORY_QML_TESTS := 'qml'
 NAME_FILE_MAIN_ENTRY := 'main.py'
 NAME_FILE_GENERATED_RESOURCES := 'generated_resources.py'
 
-#####                      #####
+#####                     #####
 ##### Existing Directories #####
-#####                      #####
+#####                     #####
 DIRECTORY_ROOT := invocation_directory()
 DIRECTORY_BUILD_HELPERS := DIRECTORY_ROOT + '/' + NAME_DIRECTORY_BUILD_HELPERS
 DIRECTORY_DATA := DIRECTORY_ROOT + '/' + NAME_DIRECTORY_DATA
@@ -53,14 +53,14 @@ DIRECTORY_PY_TESTS := DIRECTORY_ROOT + '/' + NAME_DIRECTORY_PY_TESTS
 DIRECTORY_QML_SOURCES := DIRECTORY_ROOT + '/' + NAME_DIRECTORY_QML_SOURCES
 DIRECTORY_QML_TESTS := DIRECTORY_ROOT + '/' + NAME_DIRECTORY_QML_TESTS
 
-#####                #####
+#####               #####
 ##### Existing Files #####
-#####                #####
+#####               #####
 FILE_APP_ENTRY := DIRECTORY_ROOT + '/' + NAME_FILE_MAIN_ENTRY
 
-#####                       #####
+#####                      #####
 ##### Generated Directories #####
-#####                       #####
+#####                      #####
 DIRECTORY_BUILD := DIRECTORY_ROOT + '/' + NAME_DIRECTORY_BUILD
 DIRECTORY_BUILD_QRC_QML := DIRECTORY_BUILD + '/qrc-' + NAME_DIRECTORY_QML_SOURCES
 DIRECTORY_BUILD_QRC_DATA := DIRECTORY_BUILD + '/qrc-' + NAME_DIRECTORY_DATA
@@ -70,9 +70,9 @@ DIRECTORY_BUILD_RESOURCES := DIRECTORY_BUILD + '/resources'
 DIRECTORY_BUILD_RELEASE := DIRECTORY_BUILD + '/release'
 DIRECTORY_BUILD_PY := DIRECTORY_BUILD_RELEASE + '/' + NAME_DIRECTORY_PY_SOURCES
 
-#####                 #####
+#####                #####
 ##### Generated Files #####
-#####                 #####
+#####                #####
 FILE_BUILD_QRC_QML := DIRECTORY_BUILD_QRC_QML + '/' + NAME_DIRECTORY_QML_SOURCES + '.qrc'
 FILE_BUILD_QRC_DATA := DIRECTORY_BUILD_QRC_DATA + '/' + NAME_DIRECTORY_DATA + '.qrc'
 FILE_BUILD_QRC_I18N := DIRECTORY_BUILD_QRC_I18N + '/' + NAME_DIRECTORY_I18N + '.qrc'

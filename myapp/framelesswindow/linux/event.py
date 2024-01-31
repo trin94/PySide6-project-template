@@ -1,4 +1,4 @@
-# Copyright 2023
+# Copyright
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -13,8 +13,8 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 # Inspired and based on:
-#   - https://github.com/zhiyiYo/PyQt-Frameless-Window
-#   - https://gitee.com/Virace/pyside6-qml-frameless-window/tree/main
+#  - https://github.com/zhiyiYo/PyQt-Frameless-Window
+#  - https://gitee.com/Virace/pyside6-qml-frameless-window/tree/main
 
 
 from typing import Optional
