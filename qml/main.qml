@@ -19,7 +19,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import QtQuick
 import QtQuick.Controls
 import app
-import handlers
 
 
 ApplicationWindow {
@@ -34,15 +33,6 @@ ApplicationWindow {
 
     property ApplicationWindow appWindow: window
     property int windowBorder: 5
-
-    MyAppWindowBorderMouseCurser {
-        borderWidth: windowBorder
-        anchors.fill: parent
-    }
-
-    MyAppWindowResizeHandler {
-        borderWidth: windowBorder
-    }
 
     MyAppMainPage {
         anchors.fill: parent
