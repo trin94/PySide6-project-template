@@ -121,7 +121,7 @@ test-qml: _check-qml-setup
         -silent \
         -input {{ DIRECTORY_QML_TESTS }}
 
-# Builds the project. This will add all compiled resources into the Python source directory.
+# Builds the project. This will add all compiled resources into the Python source directory
 build-develop: _check-pyside-setup _clean-develop _compile-resources
     @# Generates resources and copies them into the source directory
     @# This allows to develop/debug the project normally
