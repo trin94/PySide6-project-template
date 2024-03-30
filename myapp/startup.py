@@ -44,19 +44,13 @@ class StartUp:
 
     @staticmethod
     def import_resources():
-        try:
-            import myapp.generated_resources
-        except ImportError as e:
-            print(e, file=sys.stderr)
-            sys.exit(1)
+        # noinspection PyUnresolvedReferences
+        import myapp.generated_resources
 
     @staticmethod
     def import_bindings():
-        try:
-            import myapp.pyobjects
-        except ImportError as e:
-            print(e, file=sys.stderr)
-            sys.exit(1)
+        # noinspection PyUnresolvedReferences
+        import myapp.pyobjects
 
     @staticmethod
     def start_application():
