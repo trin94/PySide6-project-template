@@ -18,11 +18,40 @@ Project template to get started with PySide6 and QtQuick quickly without worryin
 
 # Development Setup
 
-## First Steps
+## Quick Start
 
-1. Set up the development environment for your OS (please look [here](docs/developer) for a guide)
+This project assumes that a virtual environment is used.
+
+1. Set up the development environment for your OS
+    * [Linux](docs/dev-setup-linux.md)
+    * [Windows](docs/dev-setup-windows.md)
 2. Run `just build-develop` to compile resources
 3. Run `python main.py` to start the app
+
+## Just recipes
+
+```just
+$ just --list
+Available recipes:
+    add-translation locale # Allows adding additional languages
+    build                  # Builds the project into {{ DIRECTORY_BUILD_RELEASE }}
+    build-develop          # Builds the project. This will add all compiled resources into the Python source directory
+    clean                  # Removes ALL generated files
+    test                   # Runs all Python and QML tests
+    test-python            # Runs all Python tests
+    test-qml               # Runs all QML tests
+    update-translations    # Traverses QML and Python files and updates translation files with new strings
+```
+
+## Workflow
+
+Run `just build-develop` after each change in the `data`, `i18n`, or `qml` directories.
+This will *compile* everything into a Python file and move it into the `myapp` directory
+where it will be picked up on app start.
+
+## Internationalization
+
+* Adding new languages is described [here](docs/internationalization.md)
 
 ## Read Further
 

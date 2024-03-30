@@ -27,6 +27,10 @@ Menu {
     https://martin.rpdev.net/2018/03/13/qt-quick-controls-2-automatically-set-the-width-of-menus.html
     */
 
+    readonly property bool mMirrored: count > 0 && itemAt(0).mirrored
+
+    x: mMirrored ? -width + parent.width : 0
+
     width: {
         let result = 0
         let padding = 0
