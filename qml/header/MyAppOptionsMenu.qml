@@ -24,6 +24,8 @@ import models
 
 
 MyAppAutoWidthMenu {
+    id: root
+
     title: qsTranslate("HeaderBar", "&Options")
 
     MyAppAutoWidthMenu {
@@ -53,22 +55,20 @@ MyAppAutoWidthMenu {
 
         text: qsTranslate("HeaderBar", "Showcase translated Qt strings")
 
-        property var loader: Loader { }
-
-        property var component: Component {
+        property var factory: Component
+        {
             MessageDialog {
                 title: qsTranslate("MessageBoxes", "Title")
                 text: qsTranslate("MessageBoxes", "Change the language and look at the 'Yes' and 'Cancel' buttons")
                 buttons: MessageDialog.Yes | MessageDialog.Cancel
                 visible: true
-
-                onAccepted: { action.loader.sourceComponent = null }
-                onRejected: { action.loader.sourceComponent = null }
             }
         }
 
         onTriggered: {
-            loader.sourceComponent = component
+            const dialog = factory.createObject(root)
+            dialog.closed.connect(dialog.destroy)
+            dialog.open()
         }
     }
 
