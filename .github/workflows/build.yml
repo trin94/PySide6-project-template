@@ -38,9 +38,9 @@ jobs:
       - name: 'Install pip'
         run: |
           python -m pip install --upgrade pip
-      - name: 'Update Packages'
-        run: |
-          sudo apt update -y && sudo apt upgrade -y
+#      - name: 'Update Packages'
+#        run: |
+#          sudo apt update -y && sudo apt upgrade -y
       - name: 'Install Dependencies'
         run: |
           sudo apt install -y patchelf libopengl0 libegl-dev
