@@ -53,7 +53,7 @@ MyAppAutoWidthMenu {
     Action {
         id: action
 
-        text: qsTranslate("HeaderBar", "Showcase translated Qt strings")
+        text: qsTranslate("HeaderBar", "Showcase translated Qt internal strings")
 
         property var factory: Component
         {
