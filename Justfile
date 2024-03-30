@@ -22,6 +22,8 @@ TOOL_CLI_RCC := PYTHON_DIR + '/pyside6-rcc'
 TOOL_CLI_QML_TESTRUNNER := 'qmltestrunner'
 
 export QT_QPA_PLATFORM := 'offscreen'
+export QT_QUICK_CONTROLS_STYLE := 'Material'
+export QT_QUICK_CONTROLS_MATERIAL_VARIANT := 'dense'
 
 #####      #####
 ##### Names #####
@@ -110,8 +112,7 @@ test-python: _check-pyside-setup _clean-test _compile-resources
     pytest test
 
 test-qml: _check-qml-setup
-	{{TOOL_CLI_QML_TESTRUNNER}} \
-		-input {{DIRECTORY_QML_TESTS}}
+	@{{TOOL_CLI_QML_TESTRUNNER}} -silent -input {{DIRECTORY_QML_TESTS}}
 
 build-develop: _check-pyside-setup _clean-develop _compile-resources
 	@# Generates resources and copies them into the source directory
