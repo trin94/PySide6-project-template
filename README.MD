@@ -1,6 +1,6 @@
-# PySide6 + QtQuick Project Template
+# PySide6 + QtQuick Project Template (Unofficial)
 
-Project template to get started with PySide6 and QtQuick quickly without worrying about tooling
+Unofficial project template to get started with PySide6 and QtQuick quickly without worrying about tooling
 
 ![screenshot](docs/picture.png)
 
