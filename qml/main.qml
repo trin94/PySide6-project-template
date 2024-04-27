@@ -15,17 +15,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 import QtQuick
 import QtQuick.Controls
+
 import app
 
 
 ApplicationWindow {
     id: root
-
-    property var appWindow: _shared
-    property int windowBorder: 5
 
     width: 1280
     height: 720
@@ -36,8 +33,10 @@ ApplicationWindow {
     LayoutMirroring.childrenInherit: true
 
     MyAppMainPage {
+        appWindow: _shared
+
         anchors {
-            fill: parent
+            fill: root.contentItem
             margins: _private.windowBorder
         }
     }
@@ -48,13 +47,13 @@ ApplicationWindow {
     }
 
     QtObject {
-        id: _private  // Implementation details not to expose to child items
+        id: _private  // Implementation details not exposed to child items
 
         readonly property int windowBorder: root.fullscreen || root.maximized ? 0 : 1
     }
 
     QtObject {
-        id: _shared  // Properties and functions to expose to child items
+        id: _shared  // Properties and functions exposed to child items
 
         readonly property var visibility: root.visibility
 

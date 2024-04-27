@@ -15,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 import QtQuick
 import QtQuick.Controls
 
@@ -23,7 +22,7 @@ import QtQuick.Controls
 Item {
     id: root
 
-    // required property var appWindow
+    required property var appWindow
 
     width: parent.width
     height: menuBar.height
@@ -77,7 +76,7 @@ Item {
                 }
 
                 onClicked: {
-                    appWindow.showMinimized()
+                    root.appWindow.showMinimized()
                 }
             }
 
@@ -88,7 +87,7 @@ Item {
                 height: buttonWrapper.height
 
                 icon {
-                    property bool maximized: appWindow.visibility === Window.Maximized
+                    property bool maximized: root.appWindow.visibility === Window.Maximized
                     property url iconMaximize: "qrc:/data/icons/open_in_full_black_24dp.svg"
                     property url iconNormalize: "qrc:/data/icons/close_fullscreen_black_24dp.svg"
 
@@ -102,10 +101,10 @@ Item {
                 }
 
                 onClicked: {
-                    if (appWindow.visibility === Window.Maximized) {
-                        appWindow.showNormal()
+                    if (root.appWindow.visibility === Window.Maximized) {
+                        root.appWindow.showNormal()
                     } else {
-                        appWindow.showMaximized()
+                        root.appWindow.showMaximized()
                     }
                 }
             }
@@ -127,7 +126,7 @@ Item {
                 }
 
                 onClicked: {
-                    appWindow.close()
+                    root.appWindow.close()
                 }
             }
         }

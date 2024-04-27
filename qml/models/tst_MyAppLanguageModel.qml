@@ -15,37 +15,51 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-import QtQuick 2.0
+import QtQuick
 import QtTest
 
-Item {
-    property var model: MyAppLanguageModel {}
 
-    TestCase {
-        name: "MyAppLanguageModelTest"
+TestCase {
+    id: testCase
 
-        function test_language_de_exists(data) {
-            const languages = extractLanguages()
-            verify(languages.includes('de_DE'))
-        }
+    name: "MyAppLanguageModelTest"
 
-        function test_language_en_exists(data) {
-            const languages = extractLanguages()
-            verify(languages.includes('en_US'))
-        }
+    Component {
+        id: objectUnderTest
 
-        function test_language_he_exists(data) {
-            const languages = extractLanguages()
-            verify(languages.includes('he_IL'))
-        }
-
-        function extractLanguages() {
-            const languages = []
-            for (let i = 0; i < model.count; i++){
-                languages.push(model.get(i).abbrev)
-            }
-            return languages
-        }
+        MyAppLanguageModel {}
     }
+
+    function extractLanguagesFrom(model: MyAppLanguageModel): Array<string> {
+        const languages = []
+        for (let i = 0; i < model.count; i++) {
+            languages.push(model.get(i).abbrev)
+        }
+        return languages
+    }
+
+    function test_languageExists_data() {
+        return [
+            {tag: 'de_DE', abbrev: 'de_DE'},
+            {tag: 'en_US', abbrev: 'en_US'},
+            {tag: 'he_IL', abbrev: 'he_IL'},
+        ]
+    }
+
+    function test_languageExists(data) {
+        const control = createTemporaryObject(objectUnderTest, testCase)
+        verify(control)
+
+        const languages = extractLanguagesFrom(control)
+        verify(languages.includes(data.abbrev))
+    }
+
+    function test_languageDoesNotExist() {
+        const control = createTemporaryObject(objectUnderTest, testCase)
+        verify(control)
+
+        const languages = extractLanguagesFrom(control)
+        verify(!languages.includes('something-else'))
+    }
+
 }
