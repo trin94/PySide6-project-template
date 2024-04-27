@@ -73,6 +73,15 @@
         <source>Exposed from Python: &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1 (%2)</source>
+        <extracomment>%1 will be the name of the application, %2 will be the version</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running on %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MessageBoxes</name>

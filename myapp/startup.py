@@ -61,8 +61,6 @@ def perform_startup():
 
     we.configure_qt_application_data()
     we.configure_environment_variables()
-
-    we.import_resources()
     we.import_bindings()
 
     we.start_application()
