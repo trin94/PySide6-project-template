@@ -13,8 +13,9 @@ command: run-my-app
 
 finish-args:
   - --share=ipc
-  - --socket=wayland
-  - --socket=fallback-x11
+#  - --socket=wayland
+#  - --socket=fallback-x11
+  - --socket=x11
   - --socket=pulseaudio
   - --filesystem=host
   - --device=dri
