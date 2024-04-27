@@ -30,7 +30,7 @@ TestCase {
         MyAppLanguageModel {}
     }
 
-    function extractLanguagesFrom(model: MyAppLanguageModel): Array<string> {
+    function extractLanguagesFrom(model: MyAppLanguageModel): list<string> {
         const languages = []
         for (let i = 0; i < model.count; i++) {
             languages.push(model.get(i).abbrev)

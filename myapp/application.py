@@ -42,13 +42,14 @@ class MyApplication(QGuiApplication):
         del self._engine
 
     def _retranslate(self):
-        locale = QLocale(self._engine.uiLanguage())
-
         self.removeTranslator(self._translator_qt)
         self.removeTranslator(self._translator_myapp)
 
+        identifier = self._engine.uiLanguage()
+        locale = QLocale(identifier)
+
         self._translator_qt.load(locale, "qtbase", "_", QLibraryInfo.location(QLibraryInfo.TranslationsPath))
-        self._translator_myapp.load(f':/i18n/{locale.name()}.qm')
+        self._translator_myapp.load(f':/i18n/{identifier}.qm')
 
         self.installTranslator(self._translator_qt)
         self.installTranslator(self._translator_myapp)
