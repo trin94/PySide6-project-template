@@ -86,7 +86,7 @@ FILE_BUILD_RESOURCES := DIRECTORY_BUILD_RESOURCES + '/' + NAME_FILE_GENERATED_RE
 FILE_PY_SOURCES_RESOURCES := DIRECTORY_PY_SOURCES + '/' + NAME_FILE_GENERATED_RESOURCES
 FILE_PY_TEST_RESOURCES := DIRECTORY_PY_TESTS + '/' + NAME_FILE_GENERATED_RESOURCES
 
-# Builds the project into {{ DIRECTORY_BUILD_RELEASE }}
+# Build full project into build/release
 build: _check-pyside-setup _clean-build _clean-develop _compile-resources
     @rm -rf \
         {{ DIRECTORY_BUILD_PY }}
@@ -104,10 +104,10 @@ build: _check-pyside-setup _clean-build _clean-develop _compile-resources
     @echo ''; \
         echo 'Please find the finished project in {{ DIRECTORY_BUILD_RELEASE }}'
 
-# Runs all Python and QML tests
+# Run Python and QML tests
 test: test-python test-qml
 
-# Runs all Python tests
+# Run Python tests
 test-python: _check-pyside-setup _clean-test _compile-resources
     @cp \
       {{ FILE_BUILD_RESOURCES }} \
@@ -115,13 +115,13 @@ test-python: _check-pyside-setup _clean-test _compile-resources
     @{{ PYTHON }} -m \
     pytest test
 
-# Runs all QML tests
+# Run QML tests
 test-qml: _check-qml-setup
     @{{ TOOL_CLI_QML_TESTRUNNER }} \
         -silent \
         -input {{ DIRECTORY_QML_TESTS }}
 
-# Builds the project. This will add all compiled resources into the Python source directory
+# Build and compile resources into source directory
 build-develop: _check-pyside-setup _clean-develop _compile-resources
     @# Generates resources and copies them into the source directory
     @# This allows to develop/debug the project normally
@@ -129,7 +129,7 @@ build-develop: _check-pyside-setup _clean-develop _compile-resources
     @cp \
     	{{ FILE_BUILD_RESOURCES }} {{ DIRECTORY_PY_SOURCES }}
 
-# Traverses QML and Python files and updates translation files with new strings
+# Update *.ts files by traversing the source code
 update-translations: _check-pyside-setup _clean-develop _prepare-translation-extractions
     @# Traverses *.qml and *.py files to update translation files
     @# Requires translations in .py:   QCoreApplication.translate("context", "string")
@@ -143,7 +143,7 @@ update-translations: _check-pyside-setup _clean-develop _prepare-translation-ext
     	{{ DIRECTORY_BUILD_TRANSLATIONS }}/{{ NAME_DIRECTORY_I18N }}/*.ts \
     	{{ DIRECTORY_I18N }}
 
-# Allows adding additional languages
+# Add new language
 add-translation locale: _check-pyside-setup _prepare-translation-extractions
     @cd {{ DIRECTORY_BUILD_TRANSLATIONS }}; \
         {{ TOOL_CLI_LUPDATE }} \
@@ -154,7 +154,7 @@ add-translation locale: _check-pyside-setup _prepare-translation-extractions
     @echo ''
     @just update-translations
 
-# Removes ALL generated files
+# Remove ALL generated files
 clean: _clean-build _clean-develop _clean-test
 
 _clean-build:
