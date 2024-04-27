@@ -29,6 +29,25 @@ class StartUp:
         QCoreApplication.setApplicationVersion('my app version')
 
     @staticmethod
+    def configure_logging():
+        from PySide6.QtCore import QtMsgType
+        from PySide6 import QtCore
+
+        levels = {
+            QtMsgType.QtInfoMsg: "INFO",
+            QtMsgType.QtWarningMsg: "WARNING",
+            QtMsgType.QtCriticalMsg: "CRITICAL",
+            QtMsgType.QtFatalMsg: "FATAL",
+            QtMsgType.QtDebugMsg: "DEBUG",
+        }
+
+        def handler(message_type: QtMsgType, _, message):
+            level = levels.get(message_type)
+            print(f"{level} {message}")
+
+        QtCore.qInstallMessageHandler(handler)
+
+    @staticmethod
     def configure_environment_variables():
         # Qt expects 'qtquickcontrols2.conf' at root level, but the way we handle resources does not allow that.
         # So we need to override the path here
@@ -62,6 +81,7 @@ def perform_startup():
     we = StartUp()
 
     we.configure_qt_application_data()
+    we.configure_logging()
     we.configure_environment_variables()
     we.import_bindings()
 
