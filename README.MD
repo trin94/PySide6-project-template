@@ -6,7 +6,7 @@ Unofficial opinionated project template to get started with PySide6 and QtQuick 
 
 # Features
 
-* Compatible with Python **3.8+**
+* Compatible with Python **3.9+**
 * Internationalization including (LTR/RTL)
 * Resources compiled ahead of time:
     * Everything in `data`, `i18n`, and `qml` will be compiled into a Python file
