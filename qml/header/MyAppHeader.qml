@@ -15,11 +15,14 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 import QtQuick
 
 
 Item {
+    id: root
+
+    required property var appWindow
+
     width: parent.width
     height: headerBar.height
 
@@ -28,10 +31,10 @@ Item {
 
         onTapped: {
             if (tapCount === 2) {
-                if (appWindow.visibility === Window.Maximized) {
-                    appWindow.showNormal()
+                if (root.appWindow.visibility === Window.Maximized) {
+                    root.appWindow.showNormal()
                 } else {
-                    appWindow.showMaximized()
+                    root.appWindow.showMaximized()
                 }
             }
         }
@@ -43,13 +46,15 @@ Item {
 
         onActiveChanged: {
             if (active) {
-                appWindow.startSystemMove()
+                root.appWindow.startSystemMove()
             }
         }
     }
 
     MyAppHeaderContent {
         id: headerBar
+
+        appWindow: root.appWindow
     }
 
 }

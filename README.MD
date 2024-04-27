@@ -1,6 +1,6 @@
 # PySide6 + QtQuick Project Template (Unofficial)
 
-Unofficial project template to get started with PySide6 and QtQuick quickly without worrying about tooling
+Unofficial opinionated project template to get started with PySide6 and QtQuick quickly without worrying about tooling.
 
 ![screenshot](docs/picture.png)
 
@@ -33,14 +33,14 @@ This project assumes that a virtual environment is used.
 ```just
 $ just --list
 Available recipes:
-    add-translation locale # Allows adding additional languages
-    build                  # Builds the project into {{ DIRECTORY_BUILD_RELEASE }}
-    build-develop          # Builds the project. This will add all compiled resources into the Python source directory
-    clean                  # Removes ALL generated files
-    test                   # Runs all Python and QML tests
-    test-python            # Runs all Python tests
-    test-qml               # Runs all QML tests
-    update-translations    # Traverses QML and Python files and updates translation files with new strings
+    add-translation locale # Add new language
+    build                  # Build full project into build/release
+    build-develop          # Build and compile resources into source directory
+    clean                  # Remove ALL generated files
+    test                   # Run Python and QML tests
+    test-python            # Run Python tests
+    test-qml               # Run QML tests
+    update-translations    # Update *.ts files by traversing the source code
 ```
 
 ## Workflow
@@ -55,8 +55,8 @@ where it will be picked up on app start.
 
 ## Read Further
 
-* Qt6: https://doc.qt.io/
-* Python: https://www.python.org/
+* Qt6: https://doc.qt.io
+* Python: https://www.python.org
 * PySide6: https://doc.qt.io/qtforpython/contents.html
 * QML Coding Conventions: https://doc.qt.io/qt-6/qml-codingconventions.html
 * Python & Qml: https://doc.qt.io/qtforpython/PySide6/QtQml/index.html
@@ -67,8 +67,8 @@ where it will be picked up on app start.
 
 # Dependencies
 
-* PySide6 https://pypi.org/project/PySide6/
-* PyTest https://pypi.org/project/pytest/
+* PySide6 https://pypi.org/project/PySide6
+* PyTest https://pypi.org/project/pytest
 * Just https://github.com/casey/just
 
 * App Icon: https://commons.wikimedia.org/wiki/File:Qt_logo_2016.svg

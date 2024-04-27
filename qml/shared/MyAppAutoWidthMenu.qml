@@ -15,12 +15,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 import QtQuick
 import QtQuick.Controls
 
 
 Menu {
+    id: root
 
     /*
     Taken and adapted from:
@@ -34,8 +34,8 @@ Menu {
     width: {
         let result = 0
         let padding = 0
-        for (let i = 0; i < count; ++i) {
-            let item = itemAt(i)
+        for (let i = 0; i < root.count; ++i) {
+            let item = root.itemAt(i)
 
             if (!isMenuSeparator(item)) {
                 result = Math.max(item.contentItem.implicitWidth, result)

@@ -38,6 +38,10 @@ class PreStartUp:
         # So we need to override the path here
         os.environ['QT_QUICK_CONTROLS_CONF'] = ':/data/qtquickcontrols2.conf'
 
+        if sys.platform == "linux":
+            # Use x11 backend (this enables drop shadow on Linux)
+            os.environ["QT_QPA_PLATFORM"] = "xcb"
+
 
 class StartUp:
     """Necessary steps for myapp"""

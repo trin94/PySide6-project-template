@@ -15,10 +15,10 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
+
 import shared
 import models
 
@@ -35,24 +35,34 @@ MyAppAutoWidthMenu {
             model: MyAppLanguageModel {}
 
             MenuItem {
-                text: qsTranslate("Languages", model.language)
-                onTriggered: timer.start()
+                id: _itemDelegate
+
+                required property string language  // from model
+                required property string abbrev  // from model
+
+                text: qsTranslate("Languages", _itemDelegate.language)
+
+                onTriggered: {
+                    animationDelayTimer.start()
+                }
 
                 Timer {
-                    // Delay it so possible animations have time
-                    id: timer
+                    id: animationDelayTimer
+
                     interval: 125
-                    onTriggered: Qt.uiLanguage = model.abbrev
+
+                    onTriggered: {
+                        Qt.uiLanguage = _itemDelegate.abbrev
+                    }
                 }
             }
         }
     }
 
-    MenuSeparator { }
+    MenuSeparator {
+    }
 
     Action {
-        id: action
-
         text: qsTranslate("HeaderBar", "Showcase translated Qt internal strings")
 
         property var factory: Component

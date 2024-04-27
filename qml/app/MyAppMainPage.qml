@@ -15,64 +15,82 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+
 import header
 import pyobjects
 
 
 Page {
-    anchors.fill: parent
-    header: MyAppHeader {}
+    id: root
+
+    required property var appWindow
+
+    anchors {
+        fill: root
+    }
+
+    header: MyAppHeader {
+        appWindow: root.appWindow
+    }
 
     ColumnLayout {
-        id: aboutTab
         spacing: 8
-        width: parent.width
-
-        Rectangle { color: "transparent"; height: 30; width: 10 }
+        width: root.width
 
         Image {
             source: "qrc:/data/app-icon.svg"
             asynchronous: true
+
+            Layout.alignment: Qt.AlignHCenter
             Layout.preferredWidth: 308
             Layout.preferredHeight: 226
-            Layout.alignment: Qt.AlignHCenter
-        }
-
-        Rectangle { color: "transparent"; height: 45; width: 10 }
-
-        Label {
-            text: Qt.application.name + ' (' +  Qt.application.version + ')'
-            font.bold: true
-            font.pixelSize: Qt.application.font.pixelSize * 1.5
-            Layout.alignment: Qt.AlignHCenter
+            Layout.topMargin: 30
         }
 
         Label {
-            text: 'Running on ' +  Qt.platform.os
-            font.bold: true
-            font.pixelSize: Qt.application.font.pixelSize * 1.5
+            text: Qt.application.name + ' (' + Qt.application.version + ')'
+
+            font {
+                bold: true
+                pixelSize: Qt.application.font.pixelSize * 1.5
+            }
+
             Layout.alignment: Qt.AlignHCenter
+            Layout.topMargin: 45
         }
 
-        Rectangle { color: "transparent"; height: 45; width: 10 }
+        Label {
+            text: 'Running on ' + Qt.platform.os
+
+            font {
+                bold: true
+                pixelSize: Qt.application.font.pixelSize * 1.5
+            }
+
+            Layout.alignment: Qt.AlignHCenter
+        }
 
         Label {
             text: qsTranslate("MainPage", "Have fun!")
             color: Material.accent
-            font.bold: true
-            font.pixelSize: Qt.application.font.pixelSize * 2
-            Layout.alignment: Qt.AlignHCenter
-        }
 
-        Rectangle { color: "transparent"; height: 45; width: 10 }
+            font {
+                bold: true
+                pixelSize: Qt.application.font.pixelSize * 1.5
+            }
+
+            Layout.alignment: Qt.AlignHCenter
+            Layout.topMargin: 45
+        }
 
         Label {
             text: qsTranslate("MainPage", "Exposed from Python: '%1'").arg(SingletonPyObject.exposed_property)
+
             Layout.alignment: Qt.AlignHCenter
+            Layout.topMargin: 45
         }
     }
 
