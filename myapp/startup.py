@@ -18,22 +18,18 @@ import os
 import sys
 
 
-class PreStartUp:
-    """Necessary steps for environment, Python and Qt"""
+class StartUp:
+    """"""
 
     @staticmethod
-    def set_qt_application_name():
+    def set_qt_application_data():
         from PySide6.QtCore import QCoreApplication
         QCoreApplication.setApplicationName('my app name')
         QCoreApplication.setOrganizationName('my org name')
-
-    @staticmethod
-    def set_qt_application_version():
-        from PySide6.QtCore import QCoreApplication
         QCoreApplication.setApplicationVersion('my app version')
 
     @staticmethod
-    def inject_environment_variables():
+    def set_environment_variables():
         # Qt expects 'qtquickcontrols2.conf' at root level, but the way we handle resources does not allow that.
         # So we need to override the path here
         os.environ['QT_QUICK_CONTROLS_CONF'] = ':/data/qtquickcontrols2.conf'
@@ -42,19 +38,13 @@ class PreStartUp:
             # Use x11 backend (this enables drop shadow on Linux)
             os.environ["QT_QPA_PLATFORM"] = "xcb"
 
-
-class StartUp:
-    """Necessary steps for myapp"""
-
     @staticmethod
-    def import_resources():
-        # noinspection PyUnresolvedReferences
-        import myapp.generated_resources
+    def import_resources():  # todo remove
+        import myapp.generated_resources  # noqa 401
 
     @staticmethod
     def import_bindings():
-        # noinspection PyUnresolvedReferences
-        import myapp.pyobjects
+        import myapp.pyobjects  # noqa 401
 
     @staticmethod
     def start_application():
@@ -63,22 +53,20 @@ class StartUp:
 
         app.set_window_icon()
         app.set_up_signals()
-        app.set_up_imports()
-        app.set_up_window_event_filter()
         app.start_engine()
-        app.set_up_window_effects()
+        app.configure_frameless_window()
         app.verify()
 
         sys.exit(app.exec())
 
 
 def perform_startup():
-    we = PreStartUp()
-    we.set_qt_application_name()
-    we.set_qt_application_version()
-    we.inject_environment_variables()
-
     we = StartUp()
+
+    we.set_qt_application_data()
+    we.set_environment_variables()
+
     we.import_resources()
     we.import_bindings()
+
     we.start_application()
