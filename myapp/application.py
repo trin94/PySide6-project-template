@@ -55,29 +55,27 @@ class MyApplication(QGuiApplication):
 
         self.setLayoutDirection(locale.textDirection())
 
-    def set_up_imports(self):
+    def start_engine(self):
         self._engine.addImportPath(':/qml')
+        self._engine.load(QUrl.fromLocalFile(':/qml/main.qml'))
 
-    def set_up_window_event_filter(self):
+    def configure_frameless_window(self):
         if platform.system() == "Windows":
             from myapp.framelesswindow.win import WindowsEventFilter
+            from myapp.framelesswindow.win import WindowsWindowEffect
+
             self._event_filter = WindowsEventFilter(border_width=5)
             self.installNativeEventFilter(self._event_filter)
+
+            hwnd = self.topLevelWindows()[0].winId()
+
+            self._effects = WindowsWindowEffect()
+            self._effects.addShadowEffect(hwnd)
+            self._effects.addWindowAnimation(hwnd)
         elif platform.system() == 'Linux':
             from myapp.framelesswindow.linux import LinuxEventFilter
             self._event_filter = LinuxEventFilter(border_width=5)
             self.installEventFilter(self._event_filter)
-
-    def start_engine(self):
-        self._engine.load(QUrl.fromLocalFile(':/qml/main.qml'))
-
-    def set_up_window_effects(self):
-        if sys.platform == 'win32':
-            hwnd = self.topLevelWindows()[0].winId()
-            from myapp.framelesswindow.win import WindowsWindowEffect
-            self._effects = WindowsWindowEffect()
-            self._effects.addShadowEffect(hwnd)
-            self._effects.addWindowAnimation(hwnd)
 
     def verify(self):
         if not self._engine.rootObjects():
