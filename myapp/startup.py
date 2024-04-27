@@ -39,10 +39,6 @@ class StartUp:
             os.environ["QT_QPA_PLATFORM"] = "xcb"
 
     @staticmethod
-    def import_resources():  # todo remove
-        import myapp.generated_resources  # noqa 401
-
-    @staticmethod
     def import_bindings():
         import myapp.pyobjects  # noqa 401
 
@@ -65,8 +61,6 @@ def perform_startup():
 
     we.set_qt_application_data()
     we.set_environment_variables()
-
-    we.import_resources()
     we.import_bindings()
 
     we.start_application()
