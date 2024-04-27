@@ -49,7 +49,9 @@ ApplicationWindow {
     QtObject {
         id: _private  // Implementation details not exposed to child items
 
-        readonly property int windowBorder: root.fullscreen || root.maximized ? 0 : 1
+        readonly property bool maximized: root.visibility === Window.Maximized
+        readonly property bool fullscreen: root.visibility === Window.FullScreen
+        readonly property int windowBorder: fullscreen || maximized ? 0 : 1
     }
 
     QtObject {
