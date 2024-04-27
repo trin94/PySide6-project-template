@@ -22,26 +22,61 @@ import app
 
 
 ApplicationWindow {
-    id: window
-    visible: true
+    id: root
+
+    property var appWindow: _shared
+    property int windowBorder: 5
+
     width: 1280
     height: 720
     flags: Qt.FramelessWindowHint | Qt.Window
+    visible: true
 
     LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
     LayoutMirroring.childrenInherit: true
 
-    property ApplicationWindow appWindow: window
-    property int windowBorder: 5
-
     MyAppMainPage {
-        anchors.fill: parent
-        anchors.margins: appWindow.visibility === Window.Windowed ? windowBorder : 0
+        anchors {
+            fill: parent
+            margins: _private.windowBorder
+        }
     }
 
     Component.onCompleted: {
         // load language from settings
         // Qt.uiLanguage = ...
+    }
+
+    QtObject {
+        id: _private  // Implementation details not to expose to child items
+
+        readonly property int windowBorder: root.fullscreen || root.maximized ? 0 : 1
+    }
+
+    QtObject {
+        id: _shared  // Properties and functions to expose to child items
+
+        readonly property var visibility: root.visibility
+
+        function startSystemMove() {
+            root.startSystemMove()
+        }
+
+        function showMinimized() {
+            root.showMinimized()
+        }
+
+        function showMaximized() {
+            root.showMaximized()
+        }
+
+        function showNormal() {
+            root.showNormal()
+        }
+
+        function close() {
+            root.close()
+        }
     }
 
 }
