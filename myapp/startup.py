@@ -19,7 +19,7 @@ import sys
 
 
 class StartUp:
-    """Necessary steps for environment, Python and Qt"""
+    """"""
 
     @staticmethod
     def configure_qt_application_data():
@@ -35,14 +35,12 @@ class StartUp:
         os.environ['QT_QUICK_CONTROLS_CONF'] = ':/data/qtquickcontrols2.conf'
 
     @staticmethod
-    def import_resources():
-        # noinspection PyUnresolvedReferences
-        import myapp.generated_resources
+    def import_resources():  # todo remove
+        import myapp.generated_resources  # noqa 401
 
     @staticmethod
     def import_bindings():
-        # noinspection PyUnresolvedReferences
-        import myapp.pyobjects
+        import myapp.pyobjects  # noqa 401
 
     @staticmethod
     def start_application():
@@ -51,10 +49,8 @@ class StartUp:
 
         app.set_window_icon()
         app.set_up_signals()
-        app.set_up_imports()
-        app.set_up_window_event_filter()
         app.start_engine()
-        app.set_up_window_effects()
+        app.configure_frameless_window()
         app.verify()
 
         sys.exit(app.exec())
