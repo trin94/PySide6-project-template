@@ -49,9 +49,11 @@ class StartUp:
 
         app.set_window_icon()
         app.set_up_signals()
+
         app.start_engine()
-        app.configure_frameless_window()
         app.verify()
+
+        app.configure_frameless_window()
 
         sys.exit(app.exec())
 
