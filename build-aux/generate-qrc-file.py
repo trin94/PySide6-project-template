@@ -15,10 +15,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 import argparse
-import json
 import sys
+import textwrap
 from pathlib import Path
 
 
@@ -53,47 +52,53 @@ class ArgumentValidator:
             sys.exit(1)
 
 
-class ProjectFileGenerator:
-    _extensions_ignored = {".pyc", ".qm"}
-    _extensions_translation = ".ts"
+class QrcFileGenerator:
     _files = []
 
     def __init__(self, root_dir: Path):
         self._root_dir = root_dir
 
-    def add(self, directories: list[Path], files: list[Path]):
+    def add(self, directories: list[Path], files: list[Path]) -> None:
         for directory in directories:
             for path in directory.rglob("*"):
                 if path.is_file():
                     self._files.append(path)
         self._files.extend(files)
 
-    def make_files_relative(self):
+    def replace_suffixes(self, before: str, after: str) -> None:
+        files = set()
+        for file in self._files:
+            if file.suffix == before:
+                files.add(file.with_suffix(after))
+            else:
+                files.add(file)
+
+        self._files = list(files)
+
+    def make_files_relative(self) -> None:
         self._files = [path.relative_to(self._root_dir) for path in self._files]
 
-    def remove_irrelevant_files(self):
-        self._files = [path for path in self._files if path.suffix not in self._extensions_ignored]
-
-    def sort_files(self):
+    def sort_files(self) -> None:
         self._files = sorted(self._files)
 
-    def generate_project_file(self, outfile: Path):
-        files = [str(path) for path in self._files if path.suffix != self._extensions_translation]
-        translations = [str(path) for path in self._files if path.suffix == self._extensions_translation]
-        structure = {
-            "excluded": [],
-            "includePaths": [],
-            "projectFile": "",
-            "sources": files,
-            "translations": translations,
-        }
-        data = json.dumps([structure], indent=2, sort_keys=True)
-        outfile.write_text(data, encoding="utf-8")
+    def write_to(self, output: Path) -> None:
+        line_sep = "\n" + 4 * "    "
+        files = line_sep.join([f"<file>{file}</file>" for file in self._files])
+
+        data = textwrap.dedent(f"""\
+        <!-- WARNING! All changes made in this file will be lost! -->
+        <!DOCTYPE RCC><RCC version="1.0">
+            <qresource>
+                {files}
+            </qresource>
+        </RCC>
+        """)
+        output.write_text(data, encoding="utf-8", newline="\n")
 
 
 # noinspection DuplicatedCode
 def main():
-    parser = argparse.ArgumentParser(description="Create a json project file")
+    parser = argparse.ArgumentParser(description="Create a qrc file")
     parser.add_argument("--relative-to", type=str, required=True, help="Root directory to look for files")
     parser.add_argument(
         "--include-directory",
@@ -110,7 +115,7 @@ def main():
 
 
 # noinspection DuplicatedCode
-def run(args):
+def run(args: argparse.Namespace):
     root_dir = Path(args.relative_to).absolute()
     out_file = Path(args.out_file)
     directories = [Path(path).absolute() for path in args.include_directory]
@@ -122,12 +127,12 @@ def run(args):
     validator.validate_files(files)
     validator.break_on_errors()
 
-    generator = ProjectFileGenerator(root_dir=root_dir)
+    generator = QrcFileGenerator(root_dir)
     generator.add(directories, files)
+    generator.replace_suffixes(before=".ts", after=".qm")
     generator.make_files_relative()
-    generator.remove_irrelevant_files()
     generator.sort_files()
-    generator.generate_project_file(outfile=out_file)
+    generator.write_to(out_file)
 
 
 if __name__ == "__main__":
