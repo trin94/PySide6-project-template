@@ -93,7 +93,7 @@ class QrcFileGenerator:
             </qresource>
         </RCC>
         """)
-        output.write_text(data, encoding="utf-8", newline="\n")
+        output.write_text(data, encoding="utf-8")
 
 
 # noinspection DuplicatedCode
