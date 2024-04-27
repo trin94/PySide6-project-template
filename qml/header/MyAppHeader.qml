@@ -20,6 +20,8 @@ import QtQuick
 
 
 Item {
+    id: root
+
     width: parent.width
     height: headerBar.height
 
@@ -50,6 +52,8 @@ Item {
 
     MyAppHeaderContent {
         id: headerBar
+
+        // appWindow: root.appWindow
     }
 
 }

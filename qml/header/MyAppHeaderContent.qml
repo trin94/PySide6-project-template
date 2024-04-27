@@ -21,16 +21,20 @@ import QtQuick.Controls
 
 
 Item {
-    id: headerBarContent
+    id: root
+
+    // required property var appWindow
+
     width: parent.width
     height: menuBar.height
 
     Row {
-        width: parent.width
+        width: root.width
         spacing: 0
 
         MenuBar {
             id: menuBar
+
             background: Rectangle {
                 color: "transparent"
             }
@@ -45,30 +49,57 @@ Item {
             text: Qt.application.name
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
-            width: headerBarContent.width - menuBar.width * 2
+            width: root.width - menuBar.width * 2
             height: menuBar.height
-            elide: LayoutMirroring.enabled ? Text.ElideLeft: Text.ElideRight
+            elide: LayoutMirroring.enabled ? Text.ElideLeft : Text.ElideRight
         }
 
         Item {
             id: buttonWrapper
+
             width: menuBar.width
             height: menuBar.height
 
-            MyAppWindowMinimizeButton {
+            ToolButton {
+                objectName: 'minimizeButton'
+
                 height: buttonWrapper.height
-                anchors.right: maximizeButton.left
+                focusPolicy: Qt.NoFocus
+
+                icon {
+                    source: "qrc:/data/icons/minimize_black_24dp.svg"
+                    width: 18
+                    height: 18
+                }
+
+                anchors {
+                    right: maximizeButton.left
+                }
 
                 onClicked: {
                     appWindow.showMinimized()
                 }
             }
 
-            MyAppWindowMaximizeButton {
+            ToolButton {
                 id: maximizeButton
+
+                focusPolicy: Qt.NoFocus
                 height: buttonWrapper.height
-                anchors.right: closeButton.left
-                maximized: appWindow.visibility === Window.Maximized
+
+                icon {
+                    property bool maximized: appWindow.visibility === Window.Maximized
+                    property url iconMaximize: "qrc:/data/icons/open_in_full_black_24dp.svg"
+                    property url iconNormalize: "qrc:/data/icons/close_fullscreen_black_24dp.svg"
+
+                    source: maximized ? iconNormalize : iconMaximize
+                    width: 18
+                    height: 18
+                }
+
+                anchors {
+                    right: closeButton.left
+                }
 
                 onClicked: {
                     if (appWindow.visibility === Window.Maximized) {
@@ -79,10 +110,21 @@ Item {
                 }
             }
 
-            MyAppWindowCloseButton {
+            ToolButton {
                 id: closeButton
+
                 height: buttonWrapper.height
-                anchors.right: buttonWrapper.right
+                focusPolicy: Qt.NoFocus
+
+                icon {
+                    source: "qrc:/data/icons/close_black_24dp.svg"
+                    width: 18
+                    height: 18
+                }
+
+                anchors {
+                    right: buttonWrapper.right
+                }
 
                 onClicked: {
                     appWindow.close()
