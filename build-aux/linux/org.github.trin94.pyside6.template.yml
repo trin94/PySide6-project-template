@@ -48,8 +48,8 @@ modules:
   - name: python
     sources:
       - type: archive
-        url: https://www.python.org/ftp/python/3.12.1/Python-3.12.1.tar.xz
-        sha256: 8dfb8f426fcd226657f9e2bd5f1e96e53264965176fa17d32658e873591aeb21
+        url: https://www.python.org/ftp/python/3.12.5/Python-3.12.5.tar.xz
+        sha256: fa8a2e12c5e620b09f53e65bcd87550d2e5a1e2e04bf8ba991dcc55113876397
 
   # https://github.com/flathub/io.qt.qtwebengine.BaseApp/tree/branch/6.2/krb5
   - name: krb5
