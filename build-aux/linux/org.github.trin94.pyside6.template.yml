@@ -86,10 +86,10 @@ modules:
             --prefix=${FLATPAK_DEST} "PySide6-Essentials>=6.7.2" --no-build-isolation
         sources:
           - type: file
-            url: https://files.pythonhosted.org/packages/52/cd/c8c88de4987e4740bf96f6ddb77432add3ea3090c258cc31eed9580523b1/shiboken6-6.7.2-cp38-abi3-manylinux_2_28_x86_64.whl
+            url: https://files.pythonhosted.org/packages/57/ba/3e38bb62b285d73e46a86f44e7765cea5c42a79b0bba867dfabbdd12b54d/shiboken6-6.7.2-cp39-abi3-manylinux_2_28_x86_64.whl
             sha256: 70e80737b27cd5d83504b373013b55e70462bd4a27217d919ff9a83958731990
           - type: file
-            url: https://files.pythonhosted.org/packages/db/3b/47dcab3f7a0c4c637d0c8dceabc81aadb3a5e8d8b28c9fcfb8fde3e840f3/PySide6_Essentials-6.7.2-cp38-abi3-manylinux_2_28_x86_64.whl
+            url: https://files.pythonhosted.org/packages/75/be/527e41a7744142d931e46685dd9c2bdfff39432962abf8a5263be319c2cb/PySide6_Essentials-6.7.2-cp39-abi3-manylinux_2_28_x86_64.whl
             sha256: a1a4c09f1e916b9cfe53151fe4a503a6acb1f6621ba28204d1bfe636f80d6780
 
   - name: myapp
