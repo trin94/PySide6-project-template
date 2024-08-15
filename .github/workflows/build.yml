@@ -64,7 +64,7 @@ jobs:
           just build
       - name: 'Upload Build Artifact'
         uses: actions/upload-artifact@v4
-        if: github.ref_name == 'main' && matrix.python-version == '3.12'
+        if: matrix.python-version == '3.12'
         with:
           path: build/release
           name: release-build-artifact
@@ -133,7 +133,6 @@ jobs:
   distributable-windows:
     runs-on: windows-latest
     name: 'Build Windows'
-    if: github.ref_name == 'main'
     needs:
       - build_python_linux
       - build_python_windows
@@ -184,7 +183,6 @@ jobs:
 
   distributable-linux:
     runs-on: ubuntu-latest
-    if: github.ref_name == 'main'
     name: 'Build Linux (Flatpak)'
     container:
       image: bilelmoussaoui/flatpak-github-actions:freedesktop-22.08
