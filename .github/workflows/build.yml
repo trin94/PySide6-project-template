@@ -14,7 +14,7 @@ jobs:
     name: 'Python (Linux)'
     strategy:
       matrix:
-        python-version: [ '3.8', '3.9', '3.10', '3.11', '3.12' ]
+        python-version: [ '3.9', '3.10', '3.11', '3.12' ]
     outputs:
       artifact_name: ${{ steps.step_artifact_name.outputs.artifact_name }}
     steps:
@@ -74,7 +74,7 @@ jobs:
     name: 'Python (Windows)'
     strategy:
       matrix:
-        python-version: [ '3.8', '3.9', '3.10', '3.11', '3.12' ]
+        python-version: [ '3.9', '3.10', '3.11', '3.12' ]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -120,10 +120,10 @@ jobs:
     name: 'Qml'
     steps:
       - uses: actions/checkout@v4
-      - name: 'Install Qt 6.6.*'
-        uses: jurplel/install-qt-action@v3
+      - name: 'Install Qt 6.7.1'
+        uses: jurplel/install-qt-action@v4
         with:
-          version: '6.6.*'
+          version: '6.7.1'
       - name: 'Install just'
         uses: taiki-e/install-action@just
       - name: 'Run Qml Tests'

@@ -83,14 +83,14 @@ modules:
         buildsystem: simple
         build-commands:
           - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
-            --prefix=${FLATPAK_DEST} "PySide6-Essentials>=6.6.2" --no-build-isolation
+            --prefix=${FLATPAK_DEST} "PySide6-Essentials>=6.7.2" --no-build-isolation
         sources:
           - type: file
-            url: https://files.pythonhosted.org/packages/52/cd/c8c88de4987e4740bf96f6ddb77432add3ea3090c258cc31eed9580523b1/shiboken6-6.6.2-cp38-abi3-manylinux_2_28_x86_64.whl
-            sha256: 9da86622cee5e7201bafe9c5beee3c06d9168c6b8f3e2fac52c1b7df00956bff
+            url: https://files.pythonhosted.org/packages/52/cd/c8c88de4987e4740bf96f6ddb77432add3ea3090c258cc31eed9580523b1/shiboken6-6.7.2-cp38-abi3-manylinux_2_28_x86_64.whl
+            sha256: 70e80737b27cd5d83504b373013b55e70462bd4a27217d919ff9a83958731990
           - type: file
-            url: https://files.pythonhosted.org/packages/db/3b/47dcab3f7a0c4c637d0c8dceabc81aadb3a5e8d8b28c9fcfb8fde3e840f3/PySide6_Essentials-6.6.2-cp38-abi3-manylinux_2_28_x86_64.whl
-            sha256: 90be2cf1a404f1c62777ccc6898895c864376f1fd68ae9f82f7622522bce5814
+            url: https://files.pythonhosted.org/packages/db/3b/47dcab3f7a0c4c637d0c8dceabc81aadb3a5e8d8b28c9fcfb8fde3e840f3/PySide6_Essentials-6.7.2-cp38-abi3-manylinux_2_28_x86_64.whl
+            sha256: a1a4c09f1e916b9cfe53151fe4a503a6acb1f6621ba28204d1bfe636f80d6780
 
   - name: myapp
     buildsystem: simple
