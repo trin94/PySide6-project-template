@@ -51,7 +51,8 @@ Page {
         }
 
         Label {
-            text: Qt.application.name + ' (' + Qt.application.version + ')'
+            //: %1 will be the name of the application, %2 will be the version
+            text: qsTranslate("MainPage", "%1 (%2)").arg(Qt.application.name).arg(Qt.application.version)
 
             font {
                 bold: true
@@ -63,7 +64,7 @@ Page {
         }
 
         Label {
-            text: 'Running on ' + Qt.platform.os
+            text: qsTranslate("MainPage", "Running on %1").arg(Qt.platform.os)
 
             font {
                 bold: true
