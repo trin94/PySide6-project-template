@@ -18,33 +18,21 @@ import os
 import sys
 
 
-class PreStartUp:
+class StartUp:
     """Necessary steps for environment, Python and Qt"""
 
     @staticmethod
-    def set_qt_application_name():
+    def configure_qt_application_data():
         from PySide6.QtCore import QCoreApplication
         QCoreApplication.setApplicationName('my app name')
         QCoreApplication.setOrganizationName('my org name')
-
-    @staticmethod
-    def set_qt_application_version():
-        from PySide6.QtCore import QCoreApplication
         QCoreApplication.setApplicationVersion('my app version')
 
     @staticmethod
-    def inject_environment_variables():
+    def configure_environment_variables():
         # Qt expects 'qtquickcontrols2.conf' at root level, but the way we handle resources does not allow that.
         # So we need to override the path here
         os.environ['QT_QUICK_CONTROLS_CONF'] = ':/data/qtquickcontrols2.conf'
-
-        if sys.platform == "linux":
-            # Use x11 backend (this enables drop shadow on Linux)
-            os.environ["QT_QPA_PLATFORM"] = "xcb"
-
-
-class StartUp:
-    """Necessary steps for myapp"""
 
     @staticmethod
     def import_resources():
@@ -73,12 +61,12 @@ class StartUp:
 
 
 def perform_startup():
-    we = PreStartUp()
-    we.set_qt_application_name()
-    we.set_qt_application_version()
-    we.inject_environment_variables()
-
     we = StartUp()
+
+    we.configure_qt_application_data()
+    we.configure_environment_variables()
+
     we.import_resources()
     we.import_bindings()
+
     we.start_application()
