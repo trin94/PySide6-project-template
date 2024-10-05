@@ -6,6 +6,6 @@
 # Prints relevant info for flatpak pypi dependencies
 print:
 	@python flatpak-pypi-checker.py \
-		--dependency PySide6-Essentials==6.7.2::manylinux:x86_64 \
-		--dependency shiboken6::manylinux:x86_64 \
+		--dependency PySide6-Essentials==6.7.3::manylinux:x86_64 \
+		--dependency shiboken6==6.7.3::manylinux:x86_64 \
 		  | jq
