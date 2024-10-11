@@ -19,9 +19,7 @@ PYTHON := PYTHON_DIR + if os_family() == 'windows' { '/python.exe' } else { '/py
 #
 
 TOOL_CLI_LUPDATE := PYTHON_DIR + '/pyside6-lupdate'
-TOOL_CLI_LRELEASE := PYTHON_DIR + '/pyside6-lrelease'
 TOOL_CLI_PROJECT := PYTHON_DIR + '/pyside6-project'
-TOOL_CLI_RCC := PYTHON_DIR + '/pyside6-rcc'
 TOOL_CLI_QML_TESTRUNNER := 'qmltestrunner'
 
 #
@@ -41,29 +39,23 @@ export QT_QPA_PLATFORM := 'offscreen'
 export QT_QUICK_CONTROLS_STYLE := 'Material'
 export QT_QUICK_CONTROLS_MATERIAL_VARIANT := 'dense'
 
-
 _default:
     @just --list
 
-
-# Add new language
-add-translation locale: _check-pyside-setup
-    @{{ TOOL_CLI_LUPDATE }} -source-language en_US -target-language {{ locale }} -ts {{ SOURCES_DIR_I18N + '/' + locale + '.ts ' }}
-    @echo ""
-    @just update-translations
-
-
 # Build full project into build/release
+[group('build')]
 build: build-develop
     @mkdir -p {{ RELEASE_DIR }}
     @cp -r {{ SOURCES_DIR_PYTHON }} {{ RELEASE_DIR }}
     @cp {{ SOURCES_FILE_MAIN }} {{ 'rc_' + PROJECT_FILE_NAME + '.py' }} {{ RELEASE_DIR }}
 
 # Build and compile resources into source directory
+[group('build')]
 build-develop: _check-pyside-setup clean _generate_pyproject_file
     @{{ TOOL_CLI_PROJECT }} build --quiet
 
 # Remove ALL generated files
+[group('build')]
 clean:
     @rm -rf {{ RELEASE_DIR }}
     @rm -rf {{ PYTHON_QML_MODULE }}
@@ -73,24 +65,36 @@ clean:
     @rm -f {{ PROJECT_FILE_NAME + '.qrc' }}
     @rm -f {{ 'rc_' + PROJECT_FILE_NAME + '.py' }}
 
-# Run Python and QML tests
-test: test-python test-qml
 
-# Run Python tests
-test-python: build-develop
-    @{{ PYTHON }} -m pytest test
-
-# Run QML tests
-test-qml: _check-qml-setup
-    @{{ TOOL_CLI_QML_TESTRUNNER }} \
-        -silent \
-        -input {{ SOURCES_DIR_QML }}
+# Add new language
+[group('i18n')]
+add-translation locale: _check-pyside-setup
+    @{{ TOOL_CLI_LUPDATE }} -source-language en_US -target-language {{ locale }} -ts {{ SOURCES_DIR_I18N + '/' + locale + '.ts ' }}
+    @echo ""
+    @just update-translations
 
 # Update *.ts files by traversing the source code
+[group('i18n')]
 update-translations: _check-pyside-setup _generate_lupdate_json_file
     @{{ TOOL_CLI_LUPDATE }} \
         -locations none \
         -project {{ PROJECT_FILE_NAME + '.json' }}
+
+# Run Python and QML tests
+[group('test')]
+test: test-python test-qml
+
+# Run Python tests
+[group('test')]
+test-python: build-develop
+    @{{ PYTHON }} -m pytest test
+
+# Run QML tests
+[group('test')]
+test-qml: _check-qml-setup
+    @{{ TOOL_CLI_QML_TESTRUNNER }} \
+        -silent \
+        -input {{ SOURCES_DIR_QML }}
 
 ###
 ### Helper recipes

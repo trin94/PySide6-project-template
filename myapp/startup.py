@@ -54,10 +54,6 @@ class StartUp:
         os.environ['QT_QUICK_CONTROLS_CONF'] = ':/data/qtquickcontrols2.conf'
 
     @staticmethod
-    def import_resources():  # todo remove
-        import myapp.generated_resources  # noqa 401
-
-    @staticmethod
     def import_bindings():
         import myapp.pyobjects  # noqa 401
 
