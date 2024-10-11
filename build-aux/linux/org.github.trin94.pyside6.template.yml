@@ -48,8 +48,8 @@ modules:
   - name: python
     sources:
       - type: archive
-        url: https://www.python.org/ftp/python/3.12.5/Python-3.12.5.tar.xz
-        sha256: fa8a2e12c5e620b09f53e65bcd87550d2e5a1e2e04bf8ba991dcc55113876397
+        url: https://www.python.org/ftp/python/3.12.7/Python-3.12.7.tar.xz
+        sha256: 24887b92e2afd4a2ac602419ad4b596372f67ac9b077190f459aba390faf5550
 
   # https://github.com/flathub/io.qt.qtwebengine.BaseApp/tree/branch/6.7/krb5
   - name: krb5
@@ -83,14 +83,14 @@ modules:
         buildsystem: simple
         build-commands:
           - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
-            --prefix=${FLATPAK_DEST} "PySide6-Essentials>=6.7.3" --no-build-isolation
+            --prefix=${FLATPAK_DEST} "PySide6-Essentials>=6.8.0" --no-build-isolation
         sources:
           - type: file
-            url: https://files.pythonhosted.org/packages/b2/e9/5c0c67de510da7818703d01123f7998cc495e99c0e6979a6ed6eb2ee09d0/shiboken6-6.7.3-cp39-abi3-manylinux_2_28_x86_64.whl
-            sha256: f0852e5781de78be5b13c140ec4c7fb9734e2aaf2986eb2d6a224363e03efccc
+            url: https://files.pythonhosted.org/packages/3b/92/9fa08c01ba811e2405059239e16d21b2e5c40b39de204c88fc35ac01c4ff/shiboken6-6.8.0-cp39-abi3-manylinux_2_28_x86_64.whl
+            sha256: ad88c0e73c9e4de3723c6e6b846e651729433ff9d9086bb2b4e6d49965477d97
           - type: file
-            url: https://files.pythonhosted.org/packages/8d/d8/a08ca6eca6839be5d604e4035ce899f9d6df0f612191f4ed4d03e51f1e0e/PySide6_Essentials-6.7.3-cp39-abi3-manylinux_2_28_x86_64.whl
-            sha256: cda6fd26aead48f32e57f044d18aa75dc39265b49d7957f515ce7ac3989e7029
+            url: https://files.pythonhosted.org/packages/9d/fd/17510a0abd503a904ce3b9f1af87385435cf9340fb79c020a53d3a8385a5/PySide6_Essentials-6.8.0-cp39-abi3-manylinux_2_28_x86_64.whl
+            sha256: da99a94806416ec1e386426a474e7d1e514c1cdf8ad171c005376f4f633e7216
 
   - name: myapp
     buildsystem: simple
