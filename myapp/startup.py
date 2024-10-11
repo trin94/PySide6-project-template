@@ -19,7 +19,7 @@ import sys
 
 
 class StartUp:
-    """Necessary steps for environment, Python and Qt"""
+    """"""
 
     @staticmethod
     def configure_qt_application_data():
@@ -29,20 +29,33 @@ class StartUp:
         QCoreApplication.setApplicationVersion('my app version')
 
     @staticmethod
+    def configure_logging():
+        from PySide6.QtCore import QtMsgType
+        from PySide6 import QtCore
+
+        levels = {
+            QtMsgType.QtInfoMsg: "INFO",
+            QtMsgType.QtWarningMsg: "WARNING",
+            QtMsgType.QtCriticalMsg: "CRITICAL",
+            QtMsgType.QtFatalMsg: "FATAL",
+            QtMsgType.QtDebugMsg: "DEBUG",
+        }
+
+        def handler(message_type: QtMsgType, _, message):
+            level = levels.get(message_type)
+            print(f"{level} {message}")
+
+        QtCore.qInstallMessageHandler(handler)
+
+    @staticmethod
     def configure_environment_variables():
         # Qt expects 'qtquickcontrols2.conf' at root level, but the way we handle resources does not allow that.
         # So we need to override the path here
         os.environ['QT_QUICK_CONTROLS_CONF'] = ':/data/qtquickcontrols2.conf'
 
     @staticmethod
-    def import_resources():
-        # noinspection PyUnresolvedReferences
-        import myapp.generated_resources
-
-    @staticmethod
     def import_bindings():
-        # noinspection PyUnresolvedReferences
-        import myapp.pyobjects
+        import myapp.pyobjects  # noqa 401
 
     @staticmethod
     def start_application():
@@ -51,11 +64,11 @@ class StartUp:
 
         app.set_window_icon()
         app.set_up_signals()
-        app.set_up_imports()
-        app.set_up_window_event_filter()
+
         app.start_engine()
-        app.set_up_window_effects()
         app.verify()
+
+        app.configure_frameless_window()
 
         sys.exit(app.exec())
 
@@ -64,9 +77,8 @@ def perform_startup():
     we = StartUp()
 
     we.configure_qt_application_data()
+    we.configure_logging()
     we.configure_environment_variables()
-
-    we.import_resources()
     we.import_bindings()
 
     we.start_application()

@@ -13,8 +13,9 @@ command: run-my-app
 
 finish-args:
   - --share=ipc
-  - --socket=wayland
-  - --socket=fallback-x11
+#  - --socket=wayland
+#  - --socket=fallback-x11
+  - --socket=x11
   - --socket=pulseaudio
   - --filesystem=host
   - --device=dri
@@ -97,7 +98,7 @@ modules:
     build-commands:
       - mkdir -p /app/app-directory
       - cp -r myapp /app/app-directory
-      - install -D main.py /app/app-directory
+      - install -D main.py rc_project.py /app/app-directory
       - install -Dm644 org.github.trin94.pyside6.template.svg /app/share/icons/hicolor/scalable/apps/org.github.trin94.pyside6.template.svg
       - install -Dm644 org.github.trin94.pyside6.template.desktop /app/share/applications/org.github.trin94.pyside6.template.desktop
       - install -Dm644 org.github.trin94.pyside6.template.metainfo.xml -t /app/share/metainfo

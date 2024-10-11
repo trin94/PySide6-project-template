@@ -31,7 +31,7 @@ This project assumes that a virtual environment is used.
 ## Just recipes
 
 ```just
-$ just --list
+$ just
 Available recipes:
     [build]
     build                  # Build full project into build/release
