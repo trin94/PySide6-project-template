@@ -1,2 +1,2 @@
-module components.shared
+module shared
 MyAppAutoWidthMenu MyAppAutoWidthMenu.qml
