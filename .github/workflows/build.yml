@@ -161,7 +161,7 @@ jobs:
         run: |
           source venv/Scripts/activate
           pyinstaller \
-            --name MpApp \
+            --name MyApp \
             --workpath build-windows \
             --icon=build-aux/icon.ico \
             --collect-binaries PySide6 \
@@ -170,11 +170,11 @@ jobs:
             build/release/main.py
       - name: 'Remove Redundant Binaries'
         run: |
-          find dist/MpApp -type f -name 'Qt6WebEngineCore.dll' -delete
-          find dist/MpApp -type f -name 'opengl32sw.dll' -delete
+          find dist/MyApp -type f -name 'Qt6WebEngineCore.dll' -delete
+          find dist/MyApp -type f -name 'opengl32sw.dll' -delete
       - name: 'Compress Artifact'
         shell: pwsh
-        run: Compress-Archive -Path "dist\MpApp\*" -DestinationPath "${{ needs.build_python_linux.outputs.artifact_name }}.zip"
+        run: Compress-Archive -Path "dist\MyApp\*" -DestinationPath "${{ needs.build_python_linux.outputs.artifact_name }}.zip"
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
