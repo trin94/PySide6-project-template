@@ -72,6 +72,7 @@ which will be accessed on application startup.
 - Python & QML: https://doc.qt.io/qtforpython/PySide6/QtQml/index.html
 - Scripting: https://doc.qt.io/qt-6/topics-scripting.html
 - Importing JavaScript Resources in QML: https://doc.qt.io/qt-6/qtqml-javascript-imports.html
+- Packaging on Linux: https://github.com/andyholmes/flatter
 
 # Dependencies
 
