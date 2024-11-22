@@ -27,7 +27,7 @@ TOOL_CLI_QML_TESTRUNNER := 'qmltestrunner'
 
 export QT_QPA_PLATFORM := 'offscreen'
 export QT_QUICK_CONTROLS_STYLE := 'Material'
-export QT_QUICK_CONTROLS_MATERIAL_VARIANT := 'dense'
+export QT_QUICK_CONTROLS_MATERIAL_VARIANT := 'Dense'
 
 #####      #####
 ##### Names #####
