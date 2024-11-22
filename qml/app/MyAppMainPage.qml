@@ -19,8 +19,9 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import header
 import pyobjects
+
+import "../header"
 
 
 Page {
