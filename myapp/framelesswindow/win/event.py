@@ -84,8 +84,8 @@ class WindowsEventFilter(PySide6.QtCore.QAbstractNativeEventFilter):
 
                 # get the monitor info
                 self.monitor_info = win32api.GetMonitorInfo(monitor)
-                monitor_rect = self.monitor_info['Monitor']
-                work_area = self.monitor_info['Work']
+                monitor_rect = self.monitor_info["Monitor"]
+                work_area = self.monitor_info["Work"]
 
                 # convert lParam to MINMAXINFO pointer
                 info = ctypes.cast(msg.lParam, ctypes.POINTER(MINMAXINFO)).contents
@@ -118,10 +118,10 @@ class WindowsEventFilter(PySide6.QtCore.QAbstractNativeEventFilter):
             self.monitor_info = win32api.GetMonitorInfo(monitor)
         params = ctypes.cast(msg.lParam,
                              ctypes.POINTER(NCCALCSIZE_PARAMS)).contents
-        params.rgrc[0].left = self.monitor_info['Work'][0]
-        params.rgrc[0].top = self.monitor_info['Work'][1]
-        params.rgrc[0].right = self.monitor_info['Work'][2]
-        params.rgrc[0].bottom = self.monitor_info['Work'][3]
+        params.rgrc[0].left = self.monitor_info["Work"][0]
+        params.rgrc[0].top = self.monitor_info["Work"][1]
+        params.rgrc[0].right = self.monitor_info["Work"][2]
+        params.rgrc[0].bottom = self.monitor_info["Work"][3]
 
     @classmethod
     def isWindowMaximized(cls, hwnd) -> bool:

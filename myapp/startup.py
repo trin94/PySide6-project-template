@@ -24,25 +24,23 @@ class StartUp:
     @staticmethod
     def configure_qt_application_data():
         from PySide6.QtCore import QCoreApplication
-        QCoreApplication.setApplicationName('my app name')
-        QCoreApplication.setOrganizationName('my org name')
-        QCoreApplication.setApplicationVersion('my app version')
+        QCoreApplication.setApplicationName("my app name")
+        QCoreApplication.setOrganizationName("my org name")
+        QCoreApplication.setApplicationVersion("my app version")
 
     @staticmethod
     def configure_environment_variables():
-        # Qt expects 'qtquickcontrols2.conf' at root level, but the way we handle resources does not allow that.
+        # Qt expects "qtquickcontrols2.conf" at root level, but the way we handle resources does not allow that.
         # So we need to override the path here
-        os.environ['QT_QUICK_CONTROLS_CONF'] = ':/data/qtquickcontrols2.conf'
+        os.environ["QT_QUICK_CONTROLS_CONF"] = ":/data/qtquickcontrols2.conf"
 
     @staticmethod
     def import_resources():
-        # noinspection PyUnresolvedReferences
-        import myapp.generated_resources
+        import myapp.generated_resources  # noqa: F401
 
     @staticmethod
     def import_bindings():
-        # noinspection PyUnresolvedReferences
-        import myapp.pyobjects
+        import myapp.pyobjects  # noqa: F401
 
     @staticmethod
     def start_application():

@@ -14,10 +14,10 @@
 
 
 try:
-    import test.generated_resources
+    import test.generated_resources  # noqa: F401
 except ImportError:
     import sys
 
-    print('Can not find resource module \'test.generated_resources\'', file=sys.stderr)
-    print('To execute individual tests, please run \'just test\' once before', file=sys.stderr)
+    print("Can not find resource module \"test.generated_resources\"", file=sys.stderr)
+    print("To execute individual tests, please run \"just test\" once before", file=sys.stderr)
     sys.exit(1)

@@ -19,7 +19,7 @@
 
 from typing import Optional
 
-from PySide6.QtCore import QCoreApplication, QObject, QEvent, Qt
+from PySide6.QtCore import QCoreApplication, QEvent, QObject, Qt
 from PySide6.QtGui import QCursor, QGuiApplication, QWindow
 
 

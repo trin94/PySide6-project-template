@@ -18,13 +18,19 @@
 #  - https://gitee.com/Virace/pyside6-qml-frameless-window/tree/main
 
 
-from ctypes import POINTER, byref, c_bool, c_int, pointer, sizeof, WinDLL, windll
+from ctypes import POINTER, WinDLL, byref, c_bool, c_int, pointer, sizeof, windll
 from ctypes.wintypes import DWORD, LONG, LPCVOID
 
 import win32con
 import win32gui
 
-from .c_structures import ACCENT_POLICY, MARGINS, WINDOWCOMPOSITIONATTRIB, WINDOWCOMPOSITIONATTRIBDATA, DWM_BLURBEHIND
+from .c_structures import (
+    ACCENT_POLICY,
+    DWM_BLURBEHIND,
+    MARGINS,
+    WINDOWCOMPOSITIONATTRIB,
+    WINDOWCOMPOSITIONATTRIBDATA,
+)
 
 
 class WindowsWindowEffect:

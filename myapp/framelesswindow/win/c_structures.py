@@ -19,7 +19,7 @@
 
 
 from ctypes import POINTER, Structure, c_int
-from ctypes.wintypes import DWORD, HWND, ULONG, POINT, RECT, UINT, BOOL, HRGN
+from ctypes.wintypes import BOOL, DWORD, HRGN, HWND, POINT, RECT, UINT, ULONG
 from enum import Enum
 
 
@@ -143,20 +143,20 @@ class MINMAXINFO(Structure):
 
 class PWINDOWPOS(Structure):
     _fields_ = [
-        ('hWnd', HWND),
-        ('hwndInsertAfter', HWND),
-        ('x', c_int),
-        ('y', c_int),
-        ('cx', c_int),
-        ('cy', c_int),
-        ('flags', UINT)
+        ("hWnd", HWND),
+        ("hwndInsertAfter", HWND),
+        ("x", c_int),
+        ("y", c_int),
+        ("cx", c_int),
+        ("cy", c_int),
+        ("flags", UINT)
     ]
 
 
 class NCCALCSIZE_PARAMS(Structure):
     _fields_ = [
-        ('rgrc', RECT * 3),
-        ('lppos', POINTER(PWINDOWPOS))
+        ("rgrc", RECT * 3),
+        ("lppos", POINTER(PWINDOWPOS))
     ]
 
 
@@ -165,8 +165,8 @@ LPNCCALCSIZE_PARAMS = POINTER(NCCALCSIZE_PARAMS)
 
 class DWM_BLURBEHIND(Structure):
     _fields_ = [
-        ('dwFlags', DWORD),
-        ('fEnable', BOOL),
-        ('hRgnBlur', HRGN),
-        ('fTransitionOnMaximized', BOOL),
+        ("dwFlags", DWORD),
+        ("fEnable", BOOL),
+        ("hRgnBlur", HRGN),
+        ("fTransitionOnMaximized", BOOL),
     ]

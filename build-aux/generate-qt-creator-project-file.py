@@ -27,9 +27,9 @@ class ArgumentValidator:
 
     def validate_directory(self, directory: Path):
         if not directory.exists():
-            self._errors.append(f'Directory {directory} does not exist')
+            self._errors.append(f"Directory {directory} does not exist")
         elif not directory.is_dir():
-            self._errors.append(f'Directory {directory} is not a directory')
+            self._errors.append(f"Directory {directory} is not a directory")
 
     def validate_directories(self, directories: list[Path]):
         for directory in directories:
@@ -41,9 +41,9 @@ class ArgumentValidator:
 
     def _validate_file(self, file: Path):
         if not file.exists():
-            self._errors.append(f'File {file} does not exist')
+            self._errors.append(f"File {file} does not exist")
         elif not file.is_file():
-            self._errors.append(f'File {file} is not a file')
+            self._errors.append(f"File {file} is not a file")
 
     def break_on_errors(self):
         if errors := self._errors:
@@ -53,7 +53,7 @@ class ArgumentValidator:
 
 
 class ProjectFileGenerator:
-    _extensions_ignored = {'.pyc'}
+    _extensions_ignored = {".pyc"}
     _files = []
 
     def __init__(self, root_dir: Path):
@@ -61,7 +61,7 @@ class ProjectFileGenerator:
 
     def add(self, directories: list[Path], files: list[Path]):
         for directory in directories:
-            for path in directory.rglob('*'):
+            for path in directory.rglob("*"):
                 if path.is_file():
                     self._files.append(path)
         self._files.extend(files)
@@ -76,21 +76,21 @@ class ProjectFileGenerator:
         self._files = sorted(self._files)
 
     def generate_project_file(self, output: Path):
-        structure = {'files': [str(file) for file in self._files]}
+        structure = {"files": [str(file) for file in self._files]}
         data = json.dumps(structure, indent=2, sort_keys=True)
-        output.write_text(data, encoding='utf-8')
+        output.write_text(data, encoding="utf-8")
 
 
 def main():
-    parser = argparse.ArgumentParser(description='Create a pyproject file')
-    parser.add_argument('--relative-to', type=str, required=True,
-                        help='Root directory to make files relative to')
-    parser.add_argument('--include-directory', type=str, action='append', default=[],
-                        help='Directory to include. Can be used multiple times')
-    parser.add_argument('--include-file', type=str, action='append', default=[],
-                        help='File to include. Can be used multiple times')
-    parser.add_argument('--out-file', type=str, required=True,
-                        help='Path of the pyproject file to generate')
+    parser = argparse.ArgumentParser(description="Create a pyproject file")
+    parser.add_argument("--relative-to", type=str, required=True,
+                        help="Root directory to make files relative to")
+    parser.add_argument("--include-directory", type=str, action="append", default=[],
+                        help="Directory to include. Can be used multiple times")
+    parser.add_argument("--include-file", type=str, action="append", default=[],
+                        help="File to include. Can be used multiple times")
+    parser.add_argument("--out-file", type=str, required=True,
+                        help="Path of the pyproject file to generate")
     run(parser.parse_args())
 
 
@@ -114,5 +114,5 @@ def run(args):
     generator.generate_project_file(output=out_file)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

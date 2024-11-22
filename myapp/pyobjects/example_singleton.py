@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-from PySide6.QtCore import QObject, Signal, Property
+from PySide6.QtCore import Property, QObject, Signal
 from PySide6.QtQml import QmlElement, QmlSingleton
 
 QML_IMPORT_NAME = "pyobjects"
@@ -26,7 +26,7 @@ QML_IMPORT_MAJOR_VERSION = 1
 class SingletonPyObject(QObject):
 
     def get_exposed_property(self) -> str:
-        return 'py property'
+        return "py property"
 
     exposed_property_changed = Signal(str)
     exposed_property = Property(str, get_exposed_property, notify=exposed_property_changed)

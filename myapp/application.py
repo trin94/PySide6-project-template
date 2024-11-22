@@ -17,7 +17,7 @@
 import platform
 import sys
 
-from PySide6.QtCore import QUrl, QTranslator, QLocale, QLibraryInfo
+from PySide6.QtCore import QLibraryInfo, QLocale, QTranslator, QUrl
 from PySide6.QtGui import QGuiApplication, QIcon
 from PySide6.QtQml import QQmlApplicationEngine
 
@@ -31,7 +31,7 @@ class MyApplication(QGuiApplication):
         self._translator_qt = QTranslator()
 
     def set_window_icon(self):
-        icon = QIcon(':/data/app-icon.svg')
+        icon = QIcon(":/data/app-icon.svg")
         self.setWindowIcon(icon)
 
     def set_up_signals(self):
@@ -48,7 +48,7 @@ class MyApplication(QGuiApplication):
         self.removeTranslator(self._translator_myapp)
 
         self._translator_qt.load(locale, "qtbase", "_", QLibraryInfo.location(QLibraryInfo.TranslationsPath))
-        self._translator_myapp.load(f':/i18n/{locale.name()}.qm')
+        self._translator_myapp.load(f":/i18n/{locale.name()}.qm")
 
         self.installTranslator(self._translator_qt)
         self.installTranslator(self._translator_myapp)
@@ -60,16 +60,16 @@ class MyApplication(QGuiApplication):
             from myapp.framelesswindow.win import WindowsEventFilter
             self._event_filter = WindowsEventFilter(border_width=5)
             self.installNativeEventFilter(self._event_filter)
-        elif platform.system() == 'Linux':
+        elif platform.system() == "Linux":
             from myapp.framelesswindow.linux import LinuxEventFilter
             self._event_filter = LinuxEventFilter(border_width=5)
             self.installEventFilter(self._event_filter)
 
     def start_engine(self):
-        self._engine.load(QUrl.fromLocalFile(':/qt/qml/main.qml'))
+        self._engine.load(QUrl.fromLocalFile(":/qt/qml/main.qml"))
 
     def set_up_window_effects(self):
-        if sys.platform == 'win32':
+        if sys.platform == "win32":
             hwnd = self.topLevelWindows()[0].winId()
             from myapp.framelesswindow.win import WindowsWindowEffect
             self._effects = WindowsWindowEffect()
