@@ -33,7 +33,7 @@ class LinuxEventFilter(QObject):
         self._window: Optional[QWindow] = None
 
     def eventFilter(self, obj, event):
-        if event.type() != QEvent.MouseButtonPress and event.type() != QEvent.MouseMove:
+        if event.type() != QEvent.Type.MouseButtonPress and event.type() != QEvent.Type.MouseMove:
             return False
 
         if self._window is None:
@@ -42,27 +42,27 @@ class LinuxEventFilter(QObject):
         pos = QCursor.pos() - self._window.position()
         edges = Qt.Edge(0)
         if pos.x() < self.border_width:
-            edges |= Qt.LeftEdge
+            edges |= Qt.Edge.LeftEdge
         if pos.x() >= self._window.width() - self.border_width:
-            edges |= Qt.RightEdge
+            edges |= Qt.Edge.RightEdge
         if pos.y() < self.border_width:
-            edges |= Qt.TopEdge
+            edges |= Qt.Edge.TopEdge
         if pos.y() >= self._window.height() - self.border_width:
-            edges |= Qt.BottomEdge
+            edges |= Qt.Edge.BottomEdge
 
-        if event.type() == QEvent.MouseMove and self._window.windowState() == Qt.WindowNoState:
-            if edges in (Qt.LeftEdge | Qt.TopEdge, Qt.RightEdge | Qt.BottomEdge):
-                self._app.setOverrideCursor(Qt.SizeFDiagCursor)
-            elif edges in (Qt.RightEdge | Qt.TopEdge, Qt.LeftEdge | Qt.BottomEdge):
-                self._app.setOverrideCursor(Qt.SizeBDiagCursor)
-            elif edges in (Qt.TopEdge, Qt.BottomEdge):
-                self._app.setOverrideCursor(Qt.SizeVerCursor)
-            elif edges in (Qt.LeftEdge, Qt.RightEdge):
-                self._app.setOverrideCursor(Qt.SizeHorCursor)
+        if event.type() == QEvent.Type.MouseMove and self._window.windowState() == Qt.WindowState.WindowNoState:
+            if edges in (Qt.Edge.LeftEdge | Qt.Edge.TopEdge, Qt.Edge.RightEdge | Qt.Edge.BottomEdge):
+                self._app.setOverrideCursor(Qt.CursorShape.SizeFDiagCursor)
+            elif edges in (Qt.Edge.RightEdge | Qt.Edge.TopEdge, Qt.Edge.LeftEdge | Qt.Edge.BottomEdge):
+                self._app.setOverrideCursor(Qt.CursorShape.SizeBDiagCursor)
+            elif edges in (Qt.Edge.TopEdge, Qt.Edge.BottomEdge):
+                self._app.setOverrideCursor(Qt.CursorShape.SizeVerCursor)
+            elif edges in (Qt.Edge.LeftEdge, Qt.Edge.RightEdge):
+                self._app.setOverrideCursor(Qt.CursorShape.SizeHorCursor)
             else:
                 self._app.restoreOverrideCursor()
 
-        if event.type() == QEvent.MouseButtonPress and edges:
+        if event.type() == QEvent.Type.MouseButtonPress and edges:
             self._window.startSystemResize(edges)
             return True
 

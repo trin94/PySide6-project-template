@@ -30,6 +30,9 @@ class MyApplication(QGuiApplication):
         self._translator_myapp = QTranslator()
         self._translator_qt = QTranslator()
 
+        self._event_filter = None
+        self._effects = None
+
     def set_window_icon(self):
         icon = QIcon(":/data/app-icon.svg")
         self.setWindowIcon(icon)
@@ -47,7 +50,7 @@ class MyApplication(QGuiApplication):
         self.removeTranslator(self._translator_qt)
         self.removeTranslator(self._translator_myapp)
 
-        self._translator_qt.load(locale, "qtbase", "_", QLibraryInfo.location(QLibraryInfo.TranslationsPath))
+        self._translator_qt.load(locale, "qtbase", "_", QLibraryInfo.location(QLibraryInfo.LibraryPath.TranslationsPath))
         self._translator_myapp.load(f":/i18n/{locale.name()}.qm")
 
         self.installTranslator(self._translator_qt)
