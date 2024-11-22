@@ -254,10 +254,13 @@ _generate-qrc-qml:
     @cp -r \
     	{{ DIRECTORY_QML_SOURCES }} \
     	{{ DIRECTORY_BUILD_QRC_QML }}
+    @cd {{ DIRECTORY_BUILD_QRC_QML }}; \
+        mkdir qt && mv qml qt
     @cd \
-    	{{ DIRECTORY_BUILD_QRC_QML }}/qml; \
-    		{{ TOOL_CLI_RCC }} \
-    			--project | sed 's,<file>./,<file>qml/,' > {{ FILE_BUILD_QRC_QML }}
+        {{ DIRECTORY_BUILD_QRC_QML }}; \
+            {{ TOOL_CLI_RCC }} --project \
+                | sed 's,<file>./,<file>,' \
+                | grep -v "<file>qml.qrc</file>" > {{ FILE_BUILD_QRC_QML }}
 
 _prepare-translation-extractions:
     @rm -rf \

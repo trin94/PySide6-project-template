@@ -55,9 +55,6 @@ class MyApplication(QGuiApplication):
 
         self.setLayoutDirection(locale.textDirection())
 
-    def set_up_imports(self):
-        self._engine.addImportPath(':/qml')
-
     def set_up_window_event_filter(self):
         if platform.system() == "Windows":
             from myapp.framelesswindow.win import WindowsEventFilter
@@ -69,7 +66,7 @@ class MyApplication(QGuiApplication):
             self.installEventFilter(self._event_filter)
 
     def start_engine(self):
-        self._engine.load(QUrl.fromLocalFile(':/qml/main.qml'))
+        self._engine.load(QUrl.fromLocalFile(':/qt/qml/main.qml'))
 
     def set_up_window_effects(self):
         if sys.platform == 'win32':
