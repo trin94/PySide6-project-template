@@ -14,9 +14,7 @@ jobs:
     name: 'Python (Linux)'
     strategy:
       matrix:
-        python-version: [ '3.9', '3.10', '3.11', '3.12' ]
-    outputs:
-      artifact_name: ${{ steps.step_artifact_name.outputs.artifact_name }}
+        python-version: [ '3.9', '3.10', '3.11', '3.12', '3.13' ]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -68,7 +66,9 @@ jobs:
     name: 'Python (Windows)'
     strategy:
       matrix:
-        python-version: [ '3.9', '3.10', '3.11', '3.12' ]
+        python-version: [ '3.9', '3.10', '3.11', '3.12', '3.13' ]
+    outputs:
+      artifact_name: ${{ steps.step_artifact_name.outputs.artifact_name }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -110,7 +110,7 @@ jobs:
           just build
       - name: 'Upload Build Artifact'
         uses: actions/upload-artifact@v4
-        if: matrix.python-version == '3.12'
+        if: matrix.python-version == '3.13'
         with:
           path: build/release
           name: release-build-artifact
@@ -144,10 +144,10 @@ jobs:
         with:
           path: build/release
           name: release-build-artifact
-      - name: 'Install Python 3.12'
+      - name: 'Install Python 3.13'
         uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.13"
       - name: 'Setup Build Environment'
         run: |
           python -m venv venv
@@ -173,9 +173,9 @@ jobs:
           find dist/MyApp -type f -name 'opengl32sw.dll' -delete
       - name: 'Compress Artifact'
         shell: pwsh
-        run: Compress-Archive -Path "dist\MyApp\*" -DestinationPath "${{ needs.build_python_linux.outputs.artifact_name }}.zip"
+        run: Compress-Archive -Path "dist\MyApp\*" -DestinationPath "${{ needs.build_python_windows.outputs.artifact_name }}.zip"
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ needs.build_python_linux.outputs.artifact_name }}-win-x86_64"
-          path: "${{ needs.build_python_linux.outputs.artifact_name }}.zip"
+          name: "${{ needs.build_python_windows.outputs.artifact_name }}-win-x86_64"
+          path: "${{ needs.build_python_windows.outputs.artifact_name }}.zip"
