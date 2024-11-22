@@ -163,7 +163,7 @@ jobs:
           pyinstaller \
             --name MpApp \
             --workpath build-windows \
-            --icon=build-aux/windows/icon.ico \
+            --icon=build-aux/icon.ico \
             --collect-binaries PySide6 \
             --add-data "LICENSE;." \
             --noconsole \
@@ -180,33 +180,3 @@ jobs:
         with:
           name: "${{ needs.build_python_linux.outputs.artifact_name }}-win-x86_64"
           path: "${{ needs.build_python_linux.outputs.artifact_name }}.zip"
-
-  distributable-linux:
-    runs-on: ubuntu-latest
-    name: 'Build Linux (Flatpak)'
-    container:
-      image: bilelmoussaoui/flatpak-github-actions:freedesktop-22.08
-      options: --privileged
-    needs:
-      - build_python_linux
-      - build_python_windows
-      - test_qml
-    steps:
-      - name: 'Checkout Repository'
-        uses: actions/checkout@v4
-      - name: 'Download Build Artifact'
-        uses: actions/download-artifact@v4
-        with:
-          path: build/release
-          name: release-build-artifact
-      - name: 'Prepare Flatpak Build'
-        run: |
-          mv build-aux/linux/org.github.trin94.pyside6.template.yml org.github.trin94.pyside6.template.yml
-      - name: 'Build Flatpak'
-        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
-        with:
-          manifest-path: org.github.trin94.pyside6.template.yml
-          bundle: ${{ needs.build_python_linux.outputs.artifact_name }}-linux.flatpak
-          branch: main
-          cache: false
-          cache-key: flatpak-builder-${{ github.sha }}
