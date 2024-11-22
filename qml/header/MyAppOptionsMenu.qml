@@ -19,8 +19,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
 
-import shared
-import models
+import "../shared"
+import "../models"
 
 
 MyAppAutoWidthMenu {
