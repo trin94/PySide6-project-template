@@ -120,10 +120,11 @@ jobs:
     name: 'Qml'
     steps:
       - uses: actions/checkout@v4
-      - name: 'Install Qt 6.7.2'
+      - name: 'Install Qt 6.8.*'
         uses: jurplel/install-qt-action@v4
         with:
-          version: '6.7.2'
+          arch: linux_gcc_64
+          version: 6.8.*
       - name: 'Install just'
         uses: taiki-e/install-action@just
       - name: 'Run Qml Tests'
