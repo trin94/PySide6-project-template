@@ -79,7 +79,6 @@ which will be accessed on application startup.
 - PySide6: https://pypi.org/project/PySide6
 - PyTest: https://pypi.org/project/pytest
 - Just: https://github.com/casey/just
-
 - App Icon: https://commons.wikimedia.org/wiki/File:Qt_logo_2016.svg
 - Material Icons: https://fonts.google.com/icons?selected=Material+Icons
 
