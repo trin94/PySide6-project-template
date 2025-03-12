@@ -2,7 +2,7 @@ name: 'Build'
 
 on:
   push:
-    branches: [ '**' ]
+    branches: ['**']
 
 defaults:
   run:
@@ -34,14 +34,11 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: 'Install pip'
-        run: |
-          python -m pip install --upgrade pip
-#      - name: 'Update Packages'
-#        run: |
-#          sudo apt update -y && sudo apt upgrade -y
+        run: python -m pip install --upgrade pip
+      - name: 'Update Packages'
+        run: sudo apt update -y # && sudo apt upgrade -y
       - name: 'Install Dependencies'
-        run: |
-          sudo apt install -y patchelf libopengl0 libegl-dev
+        run: sudo apt install -y patchelf libopengl0 libegl-dev
       - name: 'Install just'
         uses: taiki-e/install-action@just
       - name: 'Create Virtual Environment'
@@ -52,8 +49,7 @@ jobs:
           python -m pip install wheel
           python -m pip install -r requirements.txt
       - name: 'Remove Qml Test Files'
-        run: |
-          find . -type f -name 'tst_*.qml' -delete
+        run: find . -type f -name 'tst_*.qml' -delete
       - name: 'Run Python Tests'
         run: |
           source venv/bin/activate
@@ -88,8 +84,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: 'Install pip'
-        run: |
-          python -m pip install --upgrade pip
+        run: python -m pip install --upgrade pip
       - name: 'Install just'
         uses: taiki-e/install-action@just
       - name: 'Create Virtual Environment'
@@ -100,8 +95,7 @@ jobs:
           python -m pip install wheel
           python -m pip install -r requirements.txt
       - name: 'Remove Qml Test Files'
-        run: |
-          find . -type f -name 'tst_*.qml' -delete
+        run: find . -type f -name 'tst_*.qml' -delete
       - name: 'Run Python Tests'
         run: |
           source venv/Scripts/activate
@@ -128,8 +122,7 @@ jobs:
       - name: 'Install just'
         uses: taiki-e/install-action@just
       - name: 'Run Qml Tests'
-        run: |
-          just test-qml
+        run: just test-qml
 
   distributable-windows:
     runs-on: windows-latest
