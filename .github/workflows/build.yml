@@ -14,7 +14,7 @@ jobs:
     name: 'Python (Linux)'
     strategy:
       matrix:
-        python-version: [ '3.9', '3.10', '3.11', '3.12', '3.13' ]
+        python-version: ['3.13']
     steps:
       - uses: actions/checkout@v4
         with:
@@ -66,7 +66,7 @@ jobs:
     name: 'Python (Windows)'
     strategy:
       matrix:
-        python-version: [ '3.9', '3.10', '3.11', '3.12', '3.13' ]
+        python-version: ['3.13']
     outputs:
       artifact_name: ${{ steps.step_artifact_name.outputs.artifact_name }}
     steps:
