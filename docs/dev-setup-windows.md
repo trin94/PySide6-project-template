@@ -2,7 +2,7 @@
 
 ## Tools
 
-1. Install  [python v3.8+](https://www.python.org/downloads/)
+1. Install  [python v3.9+](https://www.python.org/downloads/)
 2. Install  [git-bash](https://git-scm.com/downloads)
 3. Install [just](https://github.com/casey/just)
 

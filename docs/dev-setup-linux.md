@@ -2,7 +2,7 @@
 
 ## Tools
 
-- Make sure `python` is on version **3.8** or later
+- Make sure `python` is on version **3.9** or later
 - Install `just` (https://github.com/casey/just)
 
 ## Checkout
