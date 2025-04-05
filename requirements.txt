@@ -1,3 +1,0 @@
-PySide6-Essentials==6.8.3
-pytest>=8.3.5
-pywin32>=310; sys_platform == 'win32'
