@@ -20,17 +20,44 @@ An unofficial and opinionated project template designed for a quick start with P
 - Client-side window decorations implemented
 - No need for Qt Creator; use your preferred text editor
 
-# Development Setup
+## Development Setup
 
-## Quick Start
+1. **Install these tools**
 
-This project requires the use of a virtual environment.
+   - [Compatible Python version](https://www.python.org/downloads)
+   - [uv](https://github.com/astral-sh/uv)
+   - [just](https://github.com/casey/just)
+   - **Windows users also need**
+     - [Git Bash](https://git-scm.com/downloads)
+     - Be sure to run `just` inside Git Bash
 
-1. Prepare the development environment for the specific operating system:
-   - [Linux](docs/dev-setup-linux.md)
-   - [Windows](docs/dev-setup-windows.md)
-2. Execute `just build-develop` to compile resources.
-3. Launch the app by running `python main.py`.
+2. **Clone the repository**
+
+3. **Open a terminal** where you cloned it
+
+4. **Initialize the environment**:
+
+   ```shell
+   just init
+   ```
+   
+## Workflow
+
+Whenever you change files in the `data`, `i18n`, or `qml` directories, run:
+
+```shell
+just build-develop
+```
+
+This compiles them into a Python file in the myapp folder, so the app recognizes them on startup.
+
+To start the app, run:
+
+```shell
+uv run main.py
+```
+
+**Tip:** Configure your IDE to run the `build-develop` recipe before launching the application.
 
 ## Just recipes
 
@@ -38,25 +65,20 @@ This project requires the use of a virtual environment.
 $ just --list
 Available recipes:
     [build]
-    build                  # Build full project into build/release
-    build-develop          # Build and compile resources into source directory
-    clean                  # Remove ALL generated files
+    build                   # Build full project into build/release
+    build-develop           # Build and compile resources into source directory
+    clean                   # Remove ALL generated files
+    init ARGS='--group dev' # Initialize repository
 
     [i18n]
-    add-translation locale # Add new language
-    update-translations    # Update *.ts files by traversing the source code
+    add-translation locale  # Add new language
+    update-translations     # Update *.ts files by traversing the source code
 
     [test]
-    test                   # Run Python and QML tests
-    test-python            # Run Python tests
-    test-qml               # Run QML tests
+    test                    # Run Python and QML tests
+    test-python             # Run Python tests
+    test-qml                # Run QML tests
 ```
-
-## Workflow
-
-After each modification in the `data`, `i18n`, or `qml` directories, run `just build-develop`.
-This command will _compile_ all resources into a Python file and place it in the `myapp` directory,
-which will be accessed on application startup.
 
 ## Internationalization
 
