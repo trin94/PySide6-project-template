@@ -9,150 +9,126 @@ defaults:
     shell: bash
 
 jobs:
-  build_python_linux:
-    runs-on: ubuntu-latest
-    name: 'Python (Linux)'
+  matrix-build:
     strategy:
       matrix:
-        python-version: ['3.13']
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: 'Prepare Artifact Name'
-        id: step_artifact_name
-        run: |
-          CURRENT_COMMIT="$(git rev-parse HEAD)"
-          CURRENT_COMMIT="${CURRENT_COMMIT:0:8}"
-          echo "git commit: $CURRENT_COMMIT"
-
-          ARTIFACT_NAME="MyApp-$CURRENT_COMMIT"
-          echo "artifact name: $ARTIFACT_NAME"
-          echo "artifact_name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
-      - name: 'Install Python'
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: 'Install pip'
-        run: python -m pip install --upgrade pip
-      - name: 'Update Packages'
-        run: sudo apt update -y # && sudo apt upgrade -y
-      - name: 'Install Dependencies'
-        run: sudo apt install -y patchelf libopengl0 libegl-dev
-      - name: 'Install just'
-        uses: taiki-e/install-action@just
-      - name: 'Create Virtual Environment'
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-          python -m pip install --upgrade pip
-          python -m pip install wheel
-          python -m pip install -r requirements.txt
-      - name: 'Remove Qml Test Files'
-        run: find . -type f -name 'tst_*.qml' -delete
-      - name: 'Run Python Tests'
-        run: |
-          source venv/bin/activate
-          just test-python
-          just clean
-          just build
-
-  build_python_windows:
-    runs-on: windows-latest
-    name: 'Python (Windows)'
-    strategy:
-      matrix:
-        python-version: ['3.13']
+        os:
+          - windows-latest
+          - ubuntu-24.04
+    runs-on: ${{ matrix.os }}
+    name: Build (${{ matrix.os }})
     outputs:
-      artifact_name: ${{ steps.step_artifact_name.outputs.artifact_name }}
+      artifact_app_name: ${{ steps.build_step.outputs.artifact_app_name }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: 'Prepare Artifact Name'
-        id: step_artifact_name
+      - name: Install Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install just
+        uses: taiki-e/install-action@just
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: false
+      - name: Run Build
+        id: build_step
         run: |
+          set -euo pipefail
+
+          function debug() { echo -e "\033[0;35m$*\033[0m"; }
+          function execute() { echo -e "\033[0;34m$*\033[0m"; "$@"; }
+
+          #
+          echo "::group::Remove Qml Test Files"
+          execute find . -type f -name 'tst_*' -delete
+          echo "::endgroup::"
+
+          #
+          echo "::group::Set Build Information"
           CURRENT_COMMIT="$(git rev-parse HEAD)"
           CURRENT_COMMIT="${CURRENT_COMMIT:0:8}"
           echo "git commit: $CURRENT_COMMIT"
 
-          ARTIFACT_NAME="MyApp-$CURRENT_COMMIT"
-          echo "artifact name: $ARTIFACT_NAME"
-          echo "artifact_name=$ARTIFACT_NAME" >> $GITHUB_OUTPUT
-      - name: 'Install Python'
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: 'Install pip'
-        run: python -m pip install --upgrade pip
-      - name: 'Install just'
-        uses: taiki-e/install-action@just
-      - name: 'Create Virtual Environment'
-        run: |
-          python -m venv venv
-          source venv/Scripts/activate
-          python -m pip install --upgrade pip
-          python -m pip install wheel
-          python -m pip install -r requirements.txt
-      - name: 'Remove Qml Test Files'
-        run: find . -type f -name 'tst_*.qml' -delete
-      - name: 'Run Python Tests'
-        run: |
-          source venv/Scripts/activate
-          just test-python
-          just clean
-          just build
-      - name: 'Upload Build Artifact'
+          ARTIFACT_APP_NAME="MyApp-$CURRENT_COMMIT"
+          echo "artifact app name: $ARTIFACT_APP_NAME"
+          echo "artifact_app_name=$ARTIFACT_APP_NAME" >> $GITHUB_OUTPUT
+          echo "::endgroup::"
+
+          #
+          echo "::group::Setup Virtual Environment"
+          execute just init
+          echo "::endgroup::"
+
+          #
+          echo "::group::Run Python Build"
+          execute just test-python
+          execute just clean
+          execute just build
+          echo "::endgroup::"
+
+          #
+          RELEASE_NAME="release-build-${RUNNER_OS@L}"
+          echo "release_name=$RELEASE_NAME" >> $GITHUB_OUTPUT
+          debug "Uploading build/release as $RELEASE_NAME"
+      - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
-        if: matrix.python-version == '3.13'
         with:
           path: build/release
-          name: release-build-artifact
+          name: ${{ steps.build_step.outputs.release_name }}
 
   test_qml:
     runs-on: ubuntu-latest
-    name: 'Qml'
+    name: Test Qml
     steps:
-      - uses: actions/checkout@v4
-      - name: 'Install Qt 6.8.*'
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Install Qt 6.8.*
         uses: jurplel/install-qt-action@v4
         with:
           arch: linux_gcc_64
           version: 6.8.*
-      - name: 'Install just'
+      - name: Install just
         uses: taiki-e/install-action@just
-      - name: 'Run Qml Tests'
+      - name: Execute Qml Tests
         run: just test-qml
 
   distributable-windows:
     runs-on: windows-latest
-    name: 'Build Windows'
+    name: Build Windows
     needs:
-      - build_python_windows
+      - matrix-build
       - test_qml
     steps:
-      - name: 'Checkout Repository'
+      - name: Checkout Repository
         uses: actions/checkout@v4
-      - name: 'Download Build Artifact'
-        uses: actions/download-artifact@v4
-        with:
-          path: build/release
-          name: release-build-artifact
-      - name: 'Install Python 3.13'
+      - name: Install Python 3.13
         uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: 'Setup Build Environment'
+      - name: Install just
+        uses: taiki-e/install-action@just
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: false
+      - name: Remove Python sources
+        run: rm -rf myapp main.py
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          path: build/release
+          name: release-build-windows
+      - name: Setup Build Environment
         run: |
-          python -m venv venv
-          source venv/Scripts/activate
-          python -m pip install --upgrade pip
-          python -m pip install wheel
-          python -m pip install -r requirements.txt
-          python -m pip install pyinstaller
-      - name: 'Build Bundle'
+          just init '--no-group dev'
+          uv pip install pyinstaller
+      - name: Build Bundle
         run: |
-          source venv/Scripts/activate
+          source .venv/Scripts/activate
           pyinstaller \
             --name MyApp \
             --workpath build-windows \
@@ -161,15 +137,14 @@ jobs:
             --add-data "LICENSE;." \
             --noconsole \
             build/release/main.py
-      - name: 'Remove Redundant Binaries'
+      - name: Remove Redundant Binaries
         run: |
           find dist/MyApp -type f -name 'Qt6WebEngineCore.dll' -delete
+          find dist/MyApp -type f -name 'QtWidgets.pyd' -delete
           find dist/MyApp -type f -name 'opengl32sw.dll' -delete
-      - name: 'Compress Artifact'
-        shell: pwsh
-        run: Compress-Archive -Path "dist\MyApp\*" -DestinationPath "${{ needs.build_python_windows.outputs.artifact_name }}.zip"
-      - name: 'Upload Artifact'
+          find dist/MyApp -type f -name 'qt6qmlcompiler.dll' -delete
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ needs.build_python_windows.outputs.artifact_name }}-win-x86_64"
-          path: "${{ needs.build_python_windows.outputs.artifact_name }}.zip"
+          name: ${{ needs.matrix-build.outputs.artifact_app_name }}-win-x86_64
+          path: dist/MyApp
