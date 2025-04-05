@@ -104,6 +104,12 @@ Available recipes:
 - App Icon: https://commons.wikimedia.org/wiki/File:Qt_logo_2016.svg
 - Material Icons: https://fonts.google.com/icons?selected=Material+Icons
 
+# Apps Made with This Template
+
+- mpvQC (https://mpvqc.github.io)
+
+Create a Pull Request to add your app to the list 😊
+
 # FAQ
 
 - Is it exclusively **PySide6**? Can **PyQt6** be used instead of PySide6?
