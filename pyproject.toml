@@ -15,7 +15,7 @@ classifiers = [
     "Private :: Do Not Upload",
 ]
 dependencies = [
-    "PySide6-Essentials==6.8.3",
+    "pyside6-essentials==6.9.0",
     "pywin32>=310; sys_platform == 'win32'",
 ]
 
