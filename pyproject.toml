@@ -1,0 +1,30 @@
+[project]
+name = "PySide6-project-template"
+version = "0.1.0"
+description = "An unofficial and opinionated project template designed for a quick start with PySide6 and QtQuick."
+readme = "README.MD"
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "License :: OSI Approved :: GNU General Public License v3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Private :: Do Not Upload",
+]
+dependencies = [
+    "PySide6-Essentials==6.8.3",
+    "pywin32>=310; sys_platform == 'win32'",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+]
+
+[project.urls]
+Homepage = "https://github.com/trin94/PySide6-project-template"
+Repository = "https://github.com/trin94/PySide6-project-template"
+Issues = "https://github.com/trin94/PySide6-project-template/issues"
