@@ -31,7 +31,7 @@ jobs:
       - name: Install just
         uses: taiki-e/install-action@just
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v6
         with:
           enable-cache: false
       - name: Run Build
@@ -112,7 +112,7 @@ jobs:
       - name: Install just
         uses: taiki-e/install-action@just
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v6
         with:
           enable-cache: false
       - name: Remove Python sources
