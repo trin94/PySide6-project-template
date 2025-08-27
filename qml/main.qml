@@ -24,9 +24,13 @@ import "app"
 ApplicationWindow {
     id: root
 
+    readonly property var windowsFlags: Qt.CustomizeWindowHint | Qt.Window
+    readonly property var linuxFlags: Qt.FramelessWindowHint | Qt.Window
+
+    flags: Qt.platform.os === "windows" ? windowsFlags : linuxFlags
+
     width: 1280
     height: 720
-    flags: Qt.FramelessWindowHint | Qt.Window
     visible: true
 
     LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
