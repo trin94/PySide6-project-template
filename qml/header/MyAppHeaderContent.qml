@@ -23,6 +23,8 @@ Item {
     id: root
 
     required property var appWindow
+    readonly property bool isWindows: Qt.platform.os === "windows"
+
 
     width: parent.width
     height: menuBar.height
@@ -127,6 +129,13 @@ Item {
 
                 onClicked: {
                     root.appWindow.close()
+                }
+
+                Binding {
+                    when: root.isWindows && closeButton.hovered
+                    target: closeButton.background
+                    property: "color"
+                    value: "#C42C1E"
                 }
             }
         }
