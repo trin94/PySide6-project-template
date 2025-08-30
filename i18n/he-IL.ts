@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de_DE" sourcelanguage="en_US">
+<TS version="2.1" language="he-IL" sourcelanguage="en-US">
 <context>
     <name>HeaderBar</name>
     <message>
@@ -52,22 +52,22 @@
     <name>Languages</name>
     <message>
         <source>English</source>
-        <translation>Englisch</translation>
+        <translation>אנגלית</translation>
     </message>
     <message>
         <source>German</source>
-        <translation>Deutsch</translation>
+        <translation>גֶרמָנִיָת</translation>
     </message>
     <message>
         <source>Hebrew</source>
-        <translation>Hebräisch</translation>
+        <translation>עִברִית</translation>
     </message>
 </context>
 <context>
     <name>MainPage</name>
     <message>
         <source>Have fun!</source>
-        <translation>Viel Spaß!</translation>
+        <translation>תעשה חיים!</translation>
     </message>
     <message>
         <source>Exposed from Python: &apos;%1&apos;</source>

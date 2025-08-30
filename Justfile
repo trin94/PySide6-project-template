@@ -45,10 +45,10 @@ export QT_QUICK_CONTROLS_STYLE := 'Material'
 	uv run pyside6-project clean
 	rm -rf build test/rc_project.py project.json project.qrc
 
-# Add new language (example locale: 'fr_FR')
+# Add language; pattern: language-region ISO 639-1, ISO 3166-1; example: fr-FR
 [group('i18n')]
 @add-translation locale: _update_pyproject_file
-    uv run pyside6-lupdate -source-language en_US -target-language {{ locale }} -ts i18n/{{ locale }}.ts
+    uv run pyside6-lupdate -source-language en-US -target-language {{ locale }} -ts i18n/{{ locale }}.ts
     just update-translations
 
 # Update *.ts files by traversing the source code

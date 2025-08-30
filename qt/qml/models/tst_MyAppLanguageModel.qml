@@ -40,9 +40,9 @@ TestCase {
 
     function test_languageExists_data() {
         return [
-            {tag: 'de_DE', abbrev: 'de_DE'},
-            {tag: 'en_US', abbrev: 'en_US'},
-            {tag: 'he_IL', abbrev: 'he_IL'},
+            {tag: 'de-DE', abbrev: 'de-DE'},
+            {tag: 'en-US', abbrev: 'en-US'},
+            {tag: 'he-IL', abbrev: 'he-IL'},
         ]
     }
 
