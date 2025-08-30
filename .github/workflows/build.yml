@@ -116,7 +116,7 @@ jobs:
         with:
           enable-cache: false
       - name: Remove Python sources
-        run: rm -rf myapp main.py
+        run: rm -rf src main.py
       - name: Download Build Artifact
         uses: actions/download-artifact@v4
         with:

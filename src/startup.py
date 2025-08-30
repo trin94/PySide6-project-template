@@ -36,15 +36,15 @@ class StartUp:
 
     @staticmethod
     def import_resources():
-        import myapp.generated_resources  # noqa: F401
+        import src.generated_resources  # noqa: F401
 
     @staticmethod
     def import_bindings():
-        import myapp.pyobjects  # noqa: F401
+        import src.pyobjects  # noqa: F401
 
     @staticmethod
     def start_application():
-        from myapp.application import MyApplication
+        from src.application import MyApplication
         app = MyApplication(sys.argv)
 
         app.set_window_icon()

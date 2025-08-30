@@ -60,11 +60,11 @@ class MyApplication(QGuiApplication):
 
     def set_up_window_event_filter(self):
         if platform.system() == "Windows":
-            from myapp.framelesswindow.win import WindowsEventFilter
+            from src.framelesswindow.win import WindowsEventFilter
             self._event_filter = WindowsEventFilter(border_width=5)
             self.installNativeEventFilter(self._event_filter)
         elif platform.system() == "Linux":
-            from myapp.framelesswindow.linux import LinuxEventFilter
+            from src.framelesswindow.linux import LinuxEventFilter
             self._event_filter = LinuxEventFilter(border_width=5)
             self.installEventFilter(self._event_filter)
 
@@ -74,7 +74,7 @@ class MyApplication(QGuiApplication):
     def set_up_window_effects(self):
         if sys.platform == "win32":
             hwnd = self.topLevelWindows()[0].winId()
-            from myapp.framelesswindow.win import WindowsWindowEffect
+            from src.framelesswindow.win import WindowsWindowEffect
             self._effects = WindowsWindowEffect()
             self._effects.addShadowEffect(hwnd)
             self._effects.addWindowAnimation(hwnd)
