@@ -20,8 +20,8 @@ from PySide6.QtCore import QFile
 
 @pytest.mark.parametrize("file_path", [
     ":/data/app-icon.svg",
-    ":/i18n/de_DE.qm",
-    ":/i18n/he_IL.qm",
+    ":/i18n/de-DE.qm",
+    ":/i18n/he-IL.qm",
 ])
 def test_resource_exist(file_path):
     file = QFile(file_path)

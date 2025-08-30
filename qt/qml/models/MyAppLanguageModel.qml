@@ -27,14 +27,14 @@ ListModel {
 
     ListElement {
         language: "English"
-        abbrev: "en_US"
+        abbrev: "en-US"
     }
     ListElement {
         language: "German"
-        abbrev: "de_DE"
+        abbrev: "de-DE"
     }
     ListElement {
         language: "Hebrew"
-        abbrev: "he_IL"
+        abbrev: "he-IL"
     }
 }

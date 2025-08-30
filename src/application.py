@@ -27,7 +27,7 @@ class MyApplication(QGuiApplication):
     def __init__(self, args):
         super().__init__(args)
         self._engine = QQmlApplicationEngine()
-        self._translator_myapp = QTranslator()
+        self._translator = QTranslator()
         self._translator_qt = QTranslator()
 
         self._event_filter = None
@@ -45,16 +45,17 @@ class MyApplication(QGuiApplication):
         del self._engine
 
     def _retranslate(self):
-        locale = QLocale(self._engine.uiLanguage())
+        language_code = self._engine.uiLanguage()
+        locale = QLocale(language_code)
 
         self.removeTranslator(self._translator_qt)
-        self.removeTranslator(self._translator_myapp)
+        self.removeTranslator(self._translator)
 
         self._translator_qt.load(locale, "qtbase", "_", QLibraryInfo.location(QLibraryInfo.LibraryPath.TranslationsPath))
-        self._translator_myapp.load(f":/i18n/{locale.name()}.qm")
+        self._translator.load(f":/i18n/{language_code}.qm")
 
         self.installTranslator(self._translator_qt)
-        self.installTranslator(self._translator_myapp)
+        self.installTranslator(self._translator)
 
         self.setLayoutDirection(locale.textDirection())
 
