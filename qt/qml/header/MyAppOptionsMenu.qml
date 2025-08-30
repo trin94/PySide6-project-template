@@ -77,7 +77,8 @@ MyAppAutoWidthMenu {
 
         onTriggered: {
             const dialog = factory.createObject(root)
-            dialog.closed.connect(dialog.destroy)
+            dialog.accepted.connect(dialog.destroy)
+            dialog.rejected.connect(dialog.destroy)
             dialog.open()
         }
     }
