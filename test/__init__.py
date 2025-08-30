@@ -14,7 +14,7 @@
 
 
 try:
-    import test.generated_resources  # noqa: F401
+    import test.rc_project  # noqa: F401
 except ImportError:
     import sys
 
