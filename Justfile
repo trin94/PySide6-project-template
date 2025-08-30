@@ -71,8 +71,7 @@ SOURCES_FILE_MAIN := 'main.py'
     echo "test-qml"
 
 @update_pyproject_file: _generate-qrc-file
-	echo "update_pyproject_file"
-	uv run python build-aux/update-pyproject-file.py \
+	uv run python build-aux/update_pyproject_file.py \
 	    --relative-to . \
 	    --include-directory {{ SOURCES_DIR_QML }} \
 	    --include-directory {{ SOURCES_DIR_DATA }} \
