@@ -22,6 +22,7 @@ import sys
 from pathlib import Path
 
 
+# noinspection DuplicatedCode
 class ArgumentValidator:
     _errors = []
 
@@ -81,19 +82,25 @@ class ProjectFileGenerator:
         output.write_text(data, encoding="utf-8")
 
 
+# noinspection DuplicatedCode
 def main():
     parser = argparse.ArgumentParser(description="Create a pyproject file")
-    parser.add_argument("--relative-to", type=str, required=True,
-                        help="Root directory to make files relative to")
-    parser.add_argument("--include-directory", type=str, action="append", default=[],
-                        help="Directory to include. Can be used multiple times")
-    parser.add_argument("--include-file", type=str, action="append", default=[],
-                        help="File to include. Can be used multiple times")
-    parser.add_argument("--out-file", type=str, required=True,
-                        help="Path of the pyproject file to generate")
+    parser.add_argument("--relative-to", type=str, required=True, help="Root directory to make files relative to")
+    parser.add_argument(
+        "--include-directory",
+        type=str,
+        action="append",
+        default=[],
+        help="Directory to include. Can be used multiple times",
+    )
+    parser.add_argument(
+        "--include-file", type=str, action="append", default=[], help="File to include. Can be used multiple times"
+    )
+    parser.add_argument("--out-file", type=str, required=True, help="Path of the pyproject file to generate")
     run(parser.parse_args())
 
 
+# noinspection DuplicatedCode
 def run(args):
     root_dir = Path(args.relative_to).absolute()
     out_file = Path(args.out_file)
@@ -108,8 +115,8 @@ def run(args):
 
     generator = ProjectFileGenerator(root_dir)
     generator.add(directories, files)
-    generator.remove_irrelevant_files()
     generator.make_files_relative()
+    generator.remove_irrelevant_files()
     generator.sort_files()
     generator.generate_project_file(output=out_file)
 

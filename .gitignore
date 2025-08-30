@@ -524,5 +524,7 @@ $RECYCLE.BIN/
 
 .flatpak-builder
 build-dir
-myapp/generated_resources.py
+src/generated_resources.py
 test/generated_resources.py
+*.pyproject
+*.qrc

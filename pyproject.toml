@@ -28,3 +28,6 @@ dev = [
 Homepage = "https://github.com/trin94/PySide6-project-template"
 Repository = "https://github.com/trin94/PySide6-project-template"
 Issues = "https://github.com/trin94/PySide6-project-template/issues"
+
+[tool.pyside6-project]
+files = []
