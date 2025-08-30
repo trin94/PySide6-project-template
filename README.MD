@@ -13,7 +13,7 @@ An unofficial and opinionated project template designed for a quick start with P
   `qml` into a Python file:
   - `data` accessible at `:/data` or `qrc:/data`
   - `i18n` accessible at `:/i18n` or `qrc:/i18n`
-  - `qml` accessible at `:/qt/qml` or `qrc:/qt/qml`
+  - `qt/qml` accessible at `:/qt/qml` or `qrc:/qt/qml`
 - Final build consists solely of Python files
 - Preconfigured testing (Python + QML)
 - CI setup included

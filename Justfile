@@ -13,14 +13,9 @@
 # You should have received a copy of the GNU Lesser General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-PROJECT_FILE_NAME := 'project'
-
-SOURCES_DIR_DATA := 'data'
-SOURCES_DIR_I18N := 'i18n'
-SOURCES_DIR_PYTHON := 'src'
-SOURCES_DIR_PYTHON_TEST := 'test'
-SOURCES_DIR_QML := 'qt/qml'
-SOURCES_FILE_MAIN := 'main.py'
+export QT_QPA_PLATFORM := 'offscreen'
+export QT_QUICK_CONTROLS_MATERIAL_VARIANT := 'Dense'
+export QT_QUICK_CONTROLS_STYLE := 'Material'
 
 @_default:
     just --list
@@ -32,58 +27,75 @@ SOURCES_FILE_MAIN := 'main.py'
 
 # Build full project into build/release
 [group('build')]
-@build:
-    echo "build"
+@build: clean
+    just build-develop
+    mkdir -p build/release
+    cp -r src build/release
+    cp main.py build/release
+    cp rc_project.py build/release
 
 # Build and compile resources into source directory
 [group('build')]
-@build-develop:
-    echo "build-develop"
+@build-develop: _update_pyproject_file
+    uv run pyside6-project build
 
 # Remove ALL generated files
 [group('build')]
-@clean:
-	echo "clean"
+@clean: _update_pyproject_file
+	uv run pyside6-project clean
+	rm -rf build test/rc_project.py project.json project.qrc
 
-# Add new language
+# Add new language (example locale: 'fr_FR')
 [group('i18n')]
-@add-translation locale:
-    echo "add-translation {{locale}}"
+@add-translation locale: _update_pyproject_file
+    uv run pyside6-lupdate -source-language en_US -target-language {{ locale }} -ts i18n/{{ locale }}.ts
+    just update-translations
 
 # Update *.ts files by traversing the source code
 [group('i18n')]
-@update-translations:
-    echo "update-translations"
+@update-translations: _update_pyproject_file _update_lupdate_project_file
+    uv run pyside6-lupdate -locations none -project project.json
 
 # Run Python and QML tests
 [group('test')]
-@test:
-	echo "test"
+@test: test-python test-qml
 
 # Run Python tests
 [group('test')]
-@test-python:
-    echo "test-python"
+@test-python: build-develop
+    rm -f test/rc_project.py
+    cp rc_project.py test/rc_project.py
+    uv run pytest build-aux test
 
 # Run QML tests
 [group('test')]
 @test-qml:
-    echo "test-qml"
+    qmltestrunner -silent -input qt/qml
 
-@update_pyproject_file: _generate-qrc-file
+@_update_pyproject_file: _generate-qrc-file
 	uv run python build-aux/update_pyproject_file.py \
 	    --relative-to . \
-	    --include-directory {{ SOURCES_DIR_QML }} \
-	    --include-directory {{ SOURCES_DIR_DATA }} \
-	    --include-directory {{ SOURCES_DIR_PYTHON }} \
-	    --include-directory {{ SOURCES_DIR_I18N }} \
-	    --include-file {{ SOURCES_FILE_MAIN }} \
-	    --include-file {{ PROJECT_FILE_NAME + '.qrc' }}
+	    --include-directory qt/qml \
+	    --include-directory data \
+	    --include-directory src \
+	    --include-directory i18n \
+	    --include-file main.py \
+	    --include-file project.qrc
 
 @_generate-qrc-file:
     uv run python build-aux/generate-qrc-file.py \
         --relative-to . \
-        --include-directory {{ SOURCES_DIR_QML }} \
-        --include-directory {{ SOURCES_DIR_DATA }} \
-        --include-directory {{ SOURCES_DIR_I18N }} \
-        --out-file {{ PROJECT_FILE_NAME + '.qrc' }}
+        --include-directory qt/qml \
+        --include-directory data \
+        --include-directory i18n \
+        --out-file project.qrc
+
+@_update_lupdate_project_file:
+	uv run python build-aux/generate-lupdate-project-file.py \
+	    --relative-to . \
+	    --include-directory qt/qml \
+	    --include-directory src \
+	    --include-directory i18n \
+	    --include-file main.py \
+	    --include-file project.qrc \
+	    --out-file project.json

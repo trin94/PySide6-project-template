@@ -2,6 +2,8 @@
 
 
 def main():
+    import rc_project  # noqa
+
     from src.startup import perform_startup
 
     perform_startup()
