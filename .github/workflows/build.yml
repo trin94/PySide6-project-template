@@ -21,7 +21,7 @@ jobs:
       artifact_app_name: ${{ steps.build_step.outputs.artifact_app_name }}
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: Install Python 3.13
@@ -85,7 +85,7 @@ jobs:
     name: Test Qml
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Install Qt 6.9.*
         uses: jurplel/install-qt-action@v4
         with:
@@ -104,7 +104,7 @@ jobs:
       - test_qml
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Install Python 3.13
         uses: actions/setup-python@v5
         with:
