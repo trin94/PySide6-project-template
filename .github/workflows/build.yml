@@ -144,7 +144,7 @@ jobs:
             --workpath build-windows \
             --icon=build-aux/icon.ico \
             --collect-binaries PySide6 \
-            --add-data "LICENSE;." \
+            --add-data "LICENSES;LICENSES" \
             --noconsole \
             build/release/main.py
       - name: Remove Redundant Binaries

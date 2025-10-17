@@ -125,3 +125,11 @@ Upgrading from `v0.0.3` or earlier to `v1.0.0` requires some adjustments:
 
 - Is it exclusively **PySide6**? Can **PyQt6** be used instead of PySide6?
   > Yes, it should be possible but may require additional work.
+
+## Licenses
+
+This project uses multiple licenses for different parts:
+
+- **Source code of the application**: [GNU GPL-3.0-or-later](LICENSES/GPL-3.0-or-later.txt)
+- **Build scripts and helper code**: [MIT](LICENSES/MIT.txt)
+- **Icons (Google Material Icons/Symbols)**: [Apache-2.0](LICENSES/Apache-2.0.txt)
