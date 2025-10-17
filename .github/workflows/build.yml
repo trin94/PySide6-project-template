@@ -28,6 +28,12 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.13"
+      - name: Install Dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt update -y
+          sudo apt upgrade -y
+          sudo apt install -y qt6-base-dev
       - name: Install just
         uses: taiki-e/install-action@just
       - name: Install uv
@@ -91,6 +97,10 @@ jobs:
         with:
           arch: linux_gcc_64
           version: 6.10.*
+      - name: Update Packages
+        run: sudo apt update -y && sudo apt upgrade -y
+      - name: Install Dependencies
+        run: sudo apt install -y qt6-base-dev
       - name: Install just
         uses: taiki-e/install-action@just
       - name: Execute Qml Tests
