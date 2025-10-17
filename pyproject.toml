@@ -3,11 +3,10 @@ name = "PySide6-project-template"
 version = "0.1.0"
 description = "An unofficial and opinionated project template designed for a quick start with PySide6 and QtQuick."
 readme = "README.MD"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "License :: OSI Approved :: GNU General Public License v3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -15,13 +14,13 @@ classifiers = [
     "Private :: Do Not Upload",
 ]
 dependencies = [
-    "pyside6-essentials==6.9.1",
+    "pyside6-essentials==6.10.0",
     "pywin32>=311; sys_platform == 'win32'",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest>=8.4.1",
+    "pytest>=8.4.2",
 ]
 
 [project.urls]
@@ -30,4 +29,43 @@ Repository = "https://github.com/trin94/PySide6-project-template"
 Issues = "https://github.com/trin94/PySide6-project-template/issues"
 
 [tool.pyside6-project]
-files = []
+files = [
+    # WARNING! This list is auto updated by the just build helper
+    "data/app-icon.svg",
+    "data/icons/close_black_24dp.svg",
+    "data/icons/close_fullscreen_black_24dp.svg",
+    "data/icons/minimize_black_24dp.svg",
+    "data/icons/open_in_full_black_24dp.svg",
+    "data/qtquickcontrols2.conf",
+    "i18n/de-DE.ts",
+    "i18n/he-IL.ts",
+    "main.py",
+    "project.qrc",
+    "qt/qml/app/MyAppMainPage.qml",
+    "qt/qml/app/qmldir",
+    "qt/qml/header/MyAppHeader.qml",
+    "qt/qml/header/MyAppHeaderContent.qml",
+    "qt/qml/header/MyAppHelpMenu.qml",
+    "qt/qml/header/MyAppMenu1.qml",
+    "qt/qml/header/MyAppMenu2.qml",
+    "qt/qml/header/MyAppOptionsMenu.qml",
+    "qt/qml/header/qmldir",
+    "qt/qml/main.qml",
+    "qt/qml/models/MyAppLanguageModel.qml",
+    "qt/qml/models/qmldir",
+    "qt/qml/models/tst_MyAppLanguageModel.qml",
+    "qt/qml/shared/MyAppAutoWidthMenu.qml",
+    "qt/qml/shared/qmldir",
+    "src/__init__.py",
+    "src/application.py",
+    "src/framelesswindow/__init__.py",
+    "src/framelesswindow/linux/__init__.py",
+    "src/framelesswindow/linux/event.py",
+    "src/framelesswindow/win/__init__.py",
+    "src/framelesswindow/win/c_structures.py",
+    "src/framelesswindow/win/effect.py",
+    "src/framelesswindow/win/event.py",
+    "src/pyobjects/__init__.py",
+    "src/pyobjects/example_singleton.py",
+    "src/startup.py",
+]

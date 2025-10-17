@@ -7,7 +7,7 @@ This template is primarily intended for **fast prototyping** and for learning ho
 
 ## Features
 
-- Compatible with Python **3.9+**
+- Compatible with Python **3.10+**
 - Supports internationalization,
   including [Right-to-Left User Interfaces](https://doc.qt.io/qt-6/qtquick-positioning-righttoleft.html)
 - Leverages the [Qt Resource System](https://doc.qt.io/qt-6/resources.html) to compile resources in `data`, `i18n`, and
