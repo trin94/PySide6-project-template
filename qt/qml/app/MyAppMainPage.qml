@@ -8,20 +8,11 @@ import QtQuick.Layouts
 
 import pyobjects
 
-import "../header"
-
-
 Page {
     id: root
 
-    required property var appWindow
-
     anchors {
         fill: root
-    }
-
-    header: MyAppHeader {
-        appWindow: root.appWindow
     }
 
     ColumnLayout {
@@ -81,5 +72,4 @@ Page {
             Layout.topMargin: 45
         }
     }
-
 }

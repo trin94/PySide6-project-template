@@ -25,6 +25,7 @@ class StartUp:
     @staticmethod
     def import_bindings():
         import src.pyobjects  # noqa: F401
+        import src.viewmodels  # noqa: F401
 
     @staticmethod
     def start_application():
