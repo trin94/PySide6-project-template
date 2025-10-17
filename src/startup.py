@@ -7,7 +7,6 @@ import sys
 
 
 class StartUp:
-    """Necessary steps for environment, Python and Qt"""
 
     @staticmethod
     def configure_qt_application_data():
@@ -24,7 +23,6 @@ class StartUp:
 
     @staticmethod
     def import_bindings():
-        import src.pyobjects  # noqa: F401
         import src.viewmodels  # noqa: F401
 
     @staticmethod

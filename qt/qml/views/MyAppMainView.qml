@@ -11,6 +11,8 @@ import pyobjects
 Page {
     id: root
 
+    readonly property MyAppMainViewModel viewModel: MyAppMainViewModel {}
+
     anchors {
         fill: root
     }
@@ -66,7 +68,7 @@ Page {
         }
 
         Label {
-            text: qsTranslate("MainPage", "Exposed from Python: '%1'").arg(SingletonPyObject.exposed_property)
+            text: qsTranslate("MainPage", "Current time exposed from Python: %1").arg(root.viewModel.time)
 
             Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: 45

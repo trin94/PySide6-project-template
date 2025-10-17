@@ -2,5 +2,6 @@
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-qmldir app
-MyAppMainPage MyAppMainPage.qml
+module views
+MyAppHeaderView MyAppHeaderView.qml
+MyAppMainView MyAppMainView.qml
