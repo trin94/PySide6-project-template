@@ -8,7 +8,6 @@ import QtQuick.Dialogs
 
 import pyobjects
 
-import "app"
 import "views"
 
 ApplicationWindow {
@@ -35,7 +34,7 @@ ApplicationWindow {
     LayoutMirroring.enabled: Qt.application.layoutDirection === Qt.RightToLeft
     LayoutMirroring.childrenInherit: true
 
-    MyAppMainPage {
+    MyAppMainView {
         header: MyAppHeaderView {
             viewModel: _headerViewModel
         }
