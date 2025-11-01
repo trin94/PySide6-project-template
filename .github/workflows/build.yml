@@ -81,7 +81,7 @@ jobs:
           echo "release_name=$RELEASE_NAME" >> $GITHUB_OUTPUT
           debug "Uploading build/release as $RELEASE_NAME"
       - name: Upload Build Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           path: build/release
           name: ${{ steps.build_step.outputs.release_name }}
@@ -154,7 +154,7 @@ jobs:
           find dist/MyApp -type f -name 'opengl32sw.dll' -delete
           find dist/MyApp -type f -name 'qt6qmlcompiler.dll' -delete
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ${{ needs.matrix-build.outputs.artifact_app_name }}-win-x86_64
           path: dist/MyApp
