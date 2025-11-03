@@ -128,7 +128,7 @@ jobs:
       - name: Remove Python sources
         run: rm -rf src main.py
       - name: Download Build Artifact
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           path: build/release
           name: release-build-windows
