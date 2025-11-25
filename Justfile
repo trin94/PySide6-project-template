@@ -30,9 +30,9 @@ export QT_QUICK_CONTROLS_STYLE := 'Material'
 
 # Remove ALL generated files
 [group('build')]
-@clean: _update_pyproject_file
-	uv run pyside6-project clean
-	rm -rf build test/rc_project.py project.json project.qrc
+@clean:
+    find i18n -name "*.qm" -type f -delete
+    rm -rf build pyobjects test/rc_project.py rc_project.py project.json project.qrc
 
 # Add language; pattern: language-region ISO 639-1, ISO 3166-1; example: fr-FR
 [group('i18n')]
@@ -51,15 +51,32 @@ export QT_QUICK_CONTROLS_STYLE := 'Material'
 
 # Run Python tests
 [group('test')]
-@test-python: build-develop
+@test-python: _prepare-tests
     rm -f test/rc_project.py
     cp rc_project.py test/rc_project.py
     uv run pytest build-aux test
 
 # Run QML tests
 [group('test')]
-@test-qml:
-    qmltestrunner -silent -input qt/qml
+test-qml: _prepare-tests
+	#!/usr/bin/env bash
+	uv run python -c '
+	import sys
+	from PySide6.QtQuickTest import QUICK_TEST_MAIN_WITH_SETUP
+	from test.prepare_qml import MyTestSetup
+
+	# Pass additional arguments to qmltestrunner:
+	sys.argv += ["-silent"]
+	sys.argv += ["-input", "qt/qml"]
+	# sys.argv += ["-eventdelay", "50"]  # Simulate slower systems
+
+	ex = QUICK_TEST_MAIN_WITH_SETUP("qmltestrunner", MyTestSetup, argv=sys.argv)
+	sys.exit(ex)
+	'
+
+@_prepare-tests: build-develop
+    rm -f test/rc_project.py
+    cp rc_project.py test/rc_project.py
 
 @_update_pyproject_file: _generate-qrc-file
 	uv run python build-aux/update_pyproject_file.py \
