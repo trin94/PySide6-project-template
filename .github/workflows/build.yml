@@ -92,17 +92,22 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v5
-      - name: Install Qt 6.10.*
-        uses: jurplel/install-qt-action@v4
+      - name: Install Python 3.13
+        uses: actions/setup-python@v6
         with:
-          arch: linux_gcc_64
-          version: 6.10.*
-      - name: Update Packages
-        run: sudo apt update -y && sudo apt upgrade -y
-      - name: Install Dependencies
-        run: sudo apt install -y qt6-base-dev
+          python-version: "3.13"
       - name: Install just
         uses: taiki-e/install-action@just
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: false
+      - name: Update Packages
+        run: sudo apt update -y
+      - name: Install Dependencies
+        run: sudo apt install -y libegl1
+      - name: Initialize Project
+        run: just init
       - name: Execute Qml Tests
         run: just test-qml
 
