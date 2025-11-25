@@ -11,16 +11,17 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Private :: Do Not Upload",
 ]
 dependencies = [
-    "pyside6-essentials==6.10.0",
+    "pyside6-essentials==6.10.1",
     "pywin32>=311; sys_platform == 'win32'",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest>=8.4.2",
+    "pytest>=9.0.1",
 ]
 
 [project.urls]
