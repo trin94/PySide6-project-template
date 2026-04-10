@@ -15,13 +15,13 @@ classifiers = [
     "Private :: Do Not Upload",
 ]
 dependencies = [
-    "pyside6-essentials==6.10.1",
+    "pyside6-essentials==6.11.0",
     "pywin32>=311; sys_platform == 'win32'",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest>=9.0.1",
+    "pytest>=9.0.3",
 ]
 
 [project.urls]
